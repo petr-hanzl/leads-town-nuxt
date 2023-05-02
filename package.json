@@ -14,8 +14,9 @@
     "nuxt-font-loader": "^2.3.1"
   },
   "dependencies": {
+    "@vee-validate/nuxt": "^4.8.6",
     "nuxt-webfontloader": "^1.1.0",
     "sass": "^1.62.1",
-    "vuetify": "^3.0.0"
+    "vuetify": "^3.2.2"
   }
 }

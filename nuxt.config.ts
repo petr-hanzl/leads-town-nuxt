@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
     modules: [
         'nuxt-font-loader',
+        '@vee-validate/nuxt'
     ],
     // @ts-ignore
     css: ['vuetify/lib/styles/main.sass'],
