@@ -7,6 +7,16 @@ export default defineNuxtPlugin(nuxtApp => {
         ssr: true,
         components,
         directives,
+        theme: {
+            themes: {
+                light: {
+                    colors: {
+                        primary: '#827717',
+                        secondary: '#9E9D24',
+                    },
+                },
+            },
+        },
     })
 
     nuxtApp.vueApp.use(vuetify)
