@@ -11,26 +11,34 @@
                       <QuestionYesNo/>
                   </v-col>
               </v-row>
-              <QuestionYesNo/>
-              <QuestionYesNo/>
-              <QuestionYesNo/>
-              <QuestionYesNo/>
-              <QuestionYesNo/>
-              <QuestionYesNo/>
-              <QuestionYesNo/>
-
           </v-sheet>
       </v-col>
     </v-container>
 </template>
 
-<script setup>
 
-import QuestionSlider from "~/components/QuestionSlider.vue";
-import QuestionYesNo from "~/components/QuestionYesNo.vue";
+<script lang="ts" setup>
+const query = gql`
+  query allQuestions {
+    allQuestions{
+        questionText,
+        questionCategory{
+            value
+        }
+        answerCategory{
+            value
+        }
+    }
+  }
+`
 
-
+const { data } = await useAsyncQuery(query)
+// const userId = localStorage.getItem('userId')
+// localStorage.removeItem('userId')
+// console.log(userId)
 </script>
+
+
 
 <style scoped>
 

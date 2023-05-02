@@ -43,16 +43,16 @@
                 ></v-checkbox>
 
                 <v-row class="d-flex justify-end">
-                    <v-btn
-                        class="me-4"
-                        type="submit"
-                        rounded
-                        color="primary"
-                        variant="tonal"
-                        size="large"
-                    >
-                        Potvrdit
-                    </v-btn>
+                        <v-btn
+                            class="me-4"
+                            type="submit"
+                            rounded
+                            color="primary"
+                            variant="tonal"
+                            size="large"
+                        >
+                            Potvrdit
+                        </v-btn>
                 </v-row>
             </form>
         </v-col>
@@ -88,13 +88,43 @@ const {handleSubmit} = useForm({
     },
 });
 
+
 const firstname = useField('firstname');
 const lastname = useField('lastname');
-const email = useField('email');
+let email = useField('email');
 const checkbox = useField('checkbox');
-const submit = handleSubmit(values => {
-    alert(JSON.stringify(values, null, 2))
-    useRouter().push('/form')
+const submit = handleSubmit(userData => {
+    const { mutate: createUser, onDone, onError } = useMutation(gql`
+    mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
+       createUser(acceptEmailing:$acceptEmailing, email:$email, firstName:$firstName, lastName:$lastName){
+        user{
+          id,
+          token
+        }
+      }
+    }`, {
+        variables: {
+            email: userData.email,
+            firstName: userData.firstname,
+            lastName: userData.lastname,
+            acceptEmailing: true
+        },
+    })
+
+    createUser()
+    onDone((res) => {
+        localStorage.setItem('userId', res.data.createUser.user.id)
+
+        useRouter().push({name:'form'})
+    })
+    onError((err) => {
+        // useRouter().push({path:'/form'})
+    })
+
+
+
+
+
 });
 
 </script>
