@@ -9,13 +9,16 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/apollo": "^5.0.0-alpha.6",
     "@types/node": "^18",
     "nuxt": "^3.4.3",
     "nuxt-font-loader": "^2.3.1"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.9",
     "@vee-validate/nuxt": "^4.8.6",
     "nuxt-webfontloader": "^1.1.0",
+    "pinia": "^2.0.35",
     "sass": "^1.62.1",
     "vuetify": "^3.2.2"
   }
