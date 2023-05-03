@@ -7,7 +7,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "node .nuxt/app.config.mjs"
+    "start": "nuxt start"
   },
   "devDependencies": {
     "@mdi/font": "^7.2.96",
