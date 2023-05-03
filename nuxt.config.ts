@@ -5,19 +5,28 @@ export default defineNuxtConfig({
     modules: [
         'nuxt-font-loader',
         '@vee-validate/nuxt',
-        '@nuxtjs/apollo'
+        '@nuxtjs/apollo',
+        '@pinia/nuxt'
     ],
 
+
+
+
+
+
     // @ts-ignore
-    css: ['vuetify/lib/styles/main.sass'],
-    configureWebpack: {
-        resolve: {
-            symlinks: false,
-            alias: {
-                vue: path.resolve(`./node_modules/vue`)
-            }
-        }
+    image: {
+
     },
+    buildModules: [
+        '@nuxt/image',
+        '@pinia/nuxt',
+        {
+            disableVuex: true
+        }
+        ],
+    css: ['vuetify/lib/styles/main.sass'],
+    target: 'static',
     build: {
         transpile: ['vuetify'],
     },
