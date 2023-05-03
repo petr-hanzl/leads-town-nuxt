@@ -1,6 +1,6 @@
 <template>
     <v-sheet class="rounded-xl pa-3 pa-sm-5" height="auto" elevation="3">
-        <p class="text-h6 text-center mb-4">Otázka slider?</p>
+        <p class="text-h6 text-center mb-4">{{ props.text }}</p>
         <v-slider
                 color="primary"
                 min="1"
@@ -13,11 +13,8 @@
 </template>
 
 <script setup lang="ts">
-    import { QuestionModel } from "~/model/question";
-
-    let questionText: string
     const props = defineProps({
-        q: QuestionModel
+        text: String
     })
 
 </script>

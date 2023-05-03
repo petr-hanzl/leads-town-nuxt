@@ -117,7 +117,7 @@ const submit = handleSubmit(userData => {
     onDone((res) => {
         localStorage.setItem('userId', res.data.createUser.user.id)
 
-        useRouter().push({name:'questionnaire'})
+        useRouter().push({name:'form'})
     })
     onError((err) => {
         // useRouter().push({path:'/form'})
