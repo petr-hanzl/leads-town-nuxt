@@ -13,15 +13,12 @@
 </template>
 
 <script setup lang="ts">
-    import { Question } from "model/question";
+    import { QuestionModel } from "~/model/question";
 
     let questionText: string
     const props = defineProps({
-        q: Question
+        q: QuestionModel
     })
-    if (props.q) {
-        questionText = props.q.questionText
-    }
 
 </script>
 

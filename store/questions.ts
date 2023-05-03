@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
+import {QuestionModel} from "~/model/question";
 
 export const useQuestionStore = defineStore( "question", {
     state: () => ({
-        allQuestions: []
+        allQuestions: [] as QuestionModel[]
     }),
     getters: {
         loadQuestions: (state) => state.allQuestions
@@ -26,8 +27,14 @@ export const useQuestionStore = defineStore( "question", {
             const { loading, result, error } = useQuery(ALL_QUESTIONS_QUERY);
             if (result) {
                 // @ts-ignore
-                this.allQuestions = result;
+                for (let q in result) {
+                    console.log(q)
+                    let quest: QuestionModel = JSON.parse(q);
+                    this.allQuestions.push(quest)
+                }
+
             }
+            // this.allQuestions = result
         }
     },
 

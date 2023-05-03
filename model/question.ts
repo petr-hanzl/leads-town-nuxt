@@ -1,15 +1,16 @@
 import { AnswerCategory } from "./answer"
 import { User } from "./user"
-export class Question {
-    readonly id: number
-    public readonly questionText: string
-    readonly questionCategory: QuestionCategory
-    readonly answerCategory: AnswerCategory
-    readonly active: boolean
+export class QuestionModel {
+    id: number
+    questionText: string
+    questionCategory: QuestionCategoryModel
+    answerCategory: AnswerCategory
+    active: boolean
     user: User
 
 
-    constructor(id: number, questionText: string, questionCategory: QuestionCategory, answerCategory: AnswerCategory, active: boolean, user: User) {
+
+    constructor(id: number, questionText: string, questionCategory: QuestionCategoryModel, answerCategory: AnswerCategory, active: boolean, user: User) {
         this.id = id
         this.questionText = questionText;
         this.questionCategory = questionCategory;
@@ -21,9 +22,9 @@ export class Question {
 
 }
 
-export class QuestionCategory {
-    readonly id: number
-    readonly value: string
+export class QuestionCategoryModel {
+    id: number
+    value: string
 
     constructor(id: number, value: string) {
         this.id = id

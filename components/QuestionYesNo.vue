@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-    import { Question } from "model/question";
+    import { QuestionModel } from "~/model/question";
 
-    const { question } = defineProps({
-        question: Question
+    const { q } = defineProps({
+        q: Object
     })
 </script>
 
