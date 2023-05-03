@@ -1,6 +1,6 @@
 <template>
-    <v-sheet class="mb-10 pt-10 rounded-xl mr-5 ml-5" elevation="3">
-        <p class="text-h6 text-center my-6">Otázka slider</p>
+    <v-sheet class="rounded-xl pa-3 pa-sm-5" height="auto" elevation="3">
+        <p class="text-h6 text-center mb-4">Otázka slider?</p>
         <v-slider
                 color="primary"
                 min="1"

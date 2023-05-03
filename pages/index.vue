@@ -1,62 +1,65 @@
 <template>
-    <v-container class="d-flex justify-center">
-        <v-col cols="12" md="8" lg="6">
-            <p class="text-h4 text-center text-primary mb-6">Zadejte identifikační údaje</p>
-            <form @submit.prevent="submit">
-                <v-row>
-                    <v-col>
-                        <v-text-field
-                            base-color="primary"
-                            color="primary"
-                            v-model="firstname.value.value"
-                            :error-messages="firstname.errorMessage.value!"
-                            label="Jméno"
-                        ></v-text-field>
-                    </v-col>
+    <v-app>
+        <v-container class="d-flex justify-center">
+            <v-col cols="12" md="8" lg="6">
+                <p class="text-h4 text-center text-primary mb-6">Zadejte identifikační údaje</p>
+                <form @submit.prevent="submit">
+                    <v-row>
+                        <v-col>
+                            <v-text-field
+                                base-color="primary"
+                                color="primary"
+                                v-model="firstname.value.value"
+                                :error-messages="firstname.errorMessage.value!"
+                                label="Jméno"
+                            ></v-text-field>
+                        </v-col>
 
-                    <v-col>
-                        <v-text-field
-                            base-color="primary"
-                            color="primary"
-                            v-model="lastname.value.value"
-                            :error-messages="lastname.errorMessage.value!"
-                            label="Příjmení"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+                        <v-col>
+                            <v-text-field
+                                base-color="primary"
+                                color="primary"
+                                v-model="lastname.value.value"
+                                :error-messages="lastname.errorMessage.value!"
+                                label="Příjmení"
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
 
-                <v-text-field
-                    base-color="primary"
-                    color="primary"
-                    v-model="email.value.value"
-                    :error-messages="email.errorMessage.value!"
-                    label="E-mail"
-                ></v-text-field>
-
-                <v-checkbox
-                    v-model="checkbox.value.value"
-                    :error-messages="checkbox.errorMessage.value!"
-                    value="1"
-                    label="Přijímám zasílání marketingových emailů"
-                    type="checkbox"
-                    color="primary"
-                ></v-checkbox>
-
-                <v-row class="d-flex justify-end">
-                    <v-btn
-                        class="me-4"
-                        type="submit"
-                        rounded
+                    <v-text-field
+                        base-color="primary"
                         color="primary"
-                        variant="tonal"
-                        size="large"
-                    >
-                        Potvrdit
-                    </v-btn>
-                </v-row>
-            </form>
-        </v-col>
-    </v-container>
+                        v-model="email.value.value"
+                        :error-messages="email.errorMessage.value!"
+                        label="E-mail"
+                    ></v-text-field>
+
+                    <v-checkbox
+                        v-model="checkbox.value.value"
+                        :error-messages="checkbox.errorMessage.value!"
+                        value="1"
+                        label="Přijímám zasílání marketingových emailů"
+                        type="checkbox"
+                        color="primary"
+                    ></v-checkbox>
+
+                    <v-row class="d-flex justify-end">
+                        <v-btn
+                            class="me-4"
+                            type="submit"
+                            rounded
+                            color="primary"
+                            variant="tonal"
+                            size="large"
+                        >
+                            Potvrdit
+                        </v-btn>
+                    </v-row>
+                </form>
+            </v-col>
+
+        </v-container>
+    </v-app>
 </template>
 
 <script setup lang="ts">
