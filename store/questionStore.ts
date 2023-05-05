@@ -28,7 +28,7 @@ interface QuestionsInfo {
     questionCategory: QuestionCategoryInfo
     answerCategory: AnswerCategoryInfo
     active: boolean
-    user: UserInfo
+    // user: UserInfo todo????
 
 }
 type QuestionResult = {

@@ -12,5 +12,11 @@ type AnswerCategoryType {
 }
 
 type CreateAnswerMutationResponse {
-    answer: AnswerType
+    answers: AnswerType
+}
+
+input AnswerInput {
+    answerValue: Int,
+    questionId: ID,
+    userId: ID
 }

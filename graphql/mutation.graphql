@@ -1,5 +1,7 @@
 type Mutation {
     createUser(email: String, firstName: String, lastName: String, acceptEmailing: Boolean): CreateUserMutationResponse
-    createAnswer(answerValue: Int, questionId: ID, userId: ID): CreateAnswerMutationResponse
+    createAnswer(answer: AnswerInput): CreateAnswerMutationResponse
+    createAnswers(answers: [AnswerInput]): [CreateAnswerMutationResponse]
 }
+
 
