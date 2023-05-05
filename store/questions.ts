@@ -1,42 +1,58 @@
-import { defineStore } from 'pinia'
-import {QuestionModel} from "~/model/question";
+import {defineStore} from 'pinia'
+import {UserInfo} from "~/store/users";
+import {AnswerCategoryInfo} from "~/store/answer";
+import {UseQueryReturn} from "@vue/apollo-composable";
 
-export const useQuestionStore = defineStore( "question", {
-    state: () => ({
-        allQuestions: [] as QuestionModel[]
-    }),
-    getters: {
-        loadQuestions: (state) => state.allQuestions
-    },
-    actions: {
-        fetchQuestions() {
-            const ALL_QUESTIONS_QUERY = gql`
-                query {
-                    allQuestions{
-                        questionText,
-                        questionCategory{
-                            value
-                        }
-                        answerCategory{
-                            value
-                        }
-                    }
-                }
-            `;
-
-            const { loading, result, error } = useQuery(ALL_QUESTIONS_QUERY);
-            if (result) {
-                // @ts-ignore
-                for (let q in result) {
-                    console.log(q)
-                    let quest: QuestionModel = JSON.parse(q);
-                    this.allQuestions.push(quest)
-                }
-
+const ALL_QUESTIONS_QUERY = gql`
+    query {
+        allQuestions{
+            questionText,
+            questionCategory{
+                value
             }
-            // this.allQuestions = result
+            answerCategory{
+                value
+            }
         }
+    }
+`;
+
+interface QuestionCategoryInfo {
+    id: number
+    value: string
+}
+
+interface QuestionsInfo {
+    id: number
+    questionText: string
+    questionCategory: QuestionCategoryInfo
+    answerCategory: AnswerCategoryInfo
+    active: boolean
+    user: UserInfo
+
+}
+type QuestionResult = {
+    allQuestions: QuestionsInfo[]
+}
+
+
+export const useQuestionStore = defineStore( "questionStore", {
+    state:() => ({
+        questionList: [] as QuestionsInfo[],
+    }),
+    actions: {
+        async fetchAllQuestions() {
+            const { data } = await useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
+            if (data.value){
+                this.questionList = data.value.allQuestions
+            }
+        },
     },
+    getters: {
+        getAllQuestions(state): QuestionsInfo[] {
+            return state.questionList
+        }
+    }
 
 })
 
