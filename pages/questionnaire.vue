@@ -15,7 +15,7 @@
 
 
 <script lang="ts" setup>
-    import {useQuestionStore} from "~/store/questions";
+    import {useQuestionStore} from "~/store/questionStore";
 
     // retrieve questionStore
     const store = useQuestionStore()

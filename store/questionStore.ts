@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
-import {UserInfo} from "~/store/users";
-import {AnswerCategoryInfo} from "~/store/answer";
+import {UserInfo} from "~/store/userStore";
+import {AnswerCategoryInfo} from "~/store/answerStore";
 import {UseQueryReturn} from "@vue/apollo-composable";
 
 const ALL_QUESTIONS_QUERY = gql`

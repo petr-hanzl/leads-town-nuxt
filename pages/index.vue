@@ -70,7 +70,7 @@
 <script setup lang="ts">
 
 import {useField, useForm} from 'vee-validate'
-import {useUserStore} from "~/store/users";
+import {useUserStore} from "~/store/userStore";
 
 const {handleSubmit} = useForm({
     validationSchema: {
