@@ -1,6 +1,4 @@
 import {defineStore} from "pinia";
-import {c} from "consola/dist/consola-3fef035a";
-import {User} from "~/model/user";
 
 export interface UserInfo {
     id: number
@@ -10,6 +8,13 @@ export interface UserInfo {
     token: string
 }
 
+const emptyUserInfo = (): UserInfo => ({
+    id: 0,
+    email: '',
+    firstName: '',
+    lastName: '',
+    token: ''
+})
 
 const CREATE_USER_MUTATION = gql`
     mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
@@ -41,6 +46,7 @@ export const useUserStore = defineStore("userStore", {
             createUser().then(res => {
                 if(res?.data) {
                     this.currentUser = res.data.createUser.user
+                    console.log(this.currentUser)
                 } else if (res?.errors) {
                     console.log(res.errors)
                 }
@@ -49,8 +55,10 @@ export const useUserStore = defineStore("userStore", {
     },
     getters: {
         getCurrentUser(state): UserInfo {
-            // @ts-ignore todo make type safe
-            return state.currentUser
+            if (state.currentUser) {
+                return state.currentUser
+            }
+            return emptyUserInfo()
         }
     }
 })

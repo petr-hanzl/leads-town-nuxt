@@ -1,10 +1,16 @@
+import {UserInfo} from "~/store/users";
+
 export class User {
     readonly id: number
     readonly email: string
+    readonly firstName: string
+    readonly lastName: string
 
 
-    constructor(id: number, email: string) {
-        this.id = id;
-        this.email = email;
+    constructor(userInfo: UserInfo) {
+        this.id = userInfo.id;
+        this.email = userInfo.email;
+        this.firstName = userInfo.firstName;
+        this.lastName = userInfo.lastName;
     }
 }

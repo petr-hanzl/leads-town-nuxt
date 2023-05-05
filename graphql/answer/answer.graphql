@@ -1,0 +1,12 @@
+type AnswerType {
+    id: ID!
+    answerValue: Int!
+    user: UserType
+    question: QuestionType
+}
+
+type AnswerCategoryType {
+    id: ID!
+    value: String!
+    questionSet: [QuestionType!]!
+}

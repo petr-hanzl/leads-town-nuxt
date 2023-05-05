@@ -5,12 +5,9 @@ export default defineNuxtConfig({
         'nuxt-font-loader',
         '@vee-validate/nuxt',
         '@nuxtjs/apollo',
-        '@pinia/nuxt'
+        '@pinia/nuxt',
     ],
     // @ts-ignore
-    image: {
-
-    },
     buildModules: [
         '@nuxt/image',
         '@pinia/nuxt',

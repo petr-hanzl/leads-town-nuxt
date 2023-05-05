@@ -22,6 +22,7 @@
     "@nuxtjs/apollo": "^5.0.0-alpha.6",
     "@pinia/nuxt": "^0.4.9",
     "@vee-validate/nuxt": "^4.8.6",
+    "graphql": "^16.6.0",
     "nuxt-material-design-icons": "^1.0.4",
     "nuxt-webfontloader": "^1.1.0",
     "pinia": "^2.0.35",
