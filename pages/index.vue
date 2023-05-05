@@ -44,16 +44,21 @@
                     ></v-checkbox>
 
                     <v-row class="d-flex justify-end">
-                        <v-btn
-                            class="me-4"
-                            type="submit"
-                            rounded
-                            color="primary"
-                            variant="tonal"
-                            size="large"
-                        >
-                            Potvrdit
-                        </v-btn>
+<!--                        <NuxtLink :to="{name:'form'}">-->
+                            <v-btn
+                                class="me-4"
+                                type="submit"
+                                rounded
+                                color="primary"
+                                variant="tonal"
+                                size="large"
+                            >
+                                Potvrdit
+
+
+
+                            </v-btn>
+<!--                        </NuxtLink>-->
                     </v-row>
                 </form>
             </v-col>
@@ -65,6 +70,7 @@
 <script setup lang="ts">
 
 import {useField, useForm} from 'vee-validate'
+import {useUserStore} from "~/store/users";
 
 const {handleSubmit} = useForm({
     validationSchema: {
@@ -95,40 +101,14 @@ const firstname = useField('firstname');
 const lastname = useField('lastname');
 let email = useField('email');
 const checkbox = useField('checkbox');
+
+// retrieve store
+const store = useUserStore()
+
 const submit = handleSubmit(userData => {
-    const { mutate: createUser, onDone, onError } = useMutation(gql`
-    mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
-       createUser(acceptEmailing:$acceptEmailing, email:$email, firstName:$firstName, lastName:$lastName){
-        user{
-          id,
-          token
-        }
-      }
-    }`, {
-        variables: {
-            email: userData.email,
-            firstName: userData.firstname,
-            lastName: userData.lastname,
-            acceptEmailing: true
-        },
-    })
-
-    createUser()
-    onDone((res) => {
-        localStorage.setItem('userId', res.data.createUser.user.id)
-
-        useRouter().push({name:'form'})
-    })
-    onError((err) => {
-        // useRouter().push({path:'/form'})
-    })
-
-
-
-
-
+    store.createUser(userData.firstname, userData.lastname, userData.email)
+    useRouter().push({name:'form'})
 });
-
 </script>
 
 

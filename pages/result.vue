@@ -10,10 +10,10 @@
 </template>
 
 <script setup lang="ts">
-const picChart = new URL(
-    "../static/result-graph.png",
-    import.meta.url
-).href;
+    const picChart = new URL(
+        "../static/result-graph.png",
+        import.meta.url
+    ).href;
 </script>
 <style scoped>
 
