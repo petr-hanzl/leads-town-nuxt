@@ -17,12 +17,7 @@ const ALL_QUESTIONS_QUERY = gql`
     }
 `;
 
-interface QuestionCategoryInfo {
-    id: number
-    value: string
-}
-
-interface QuestionsInfo {
+export interface QuestionsInfo {
     id: number
     questionText: string
     questionCategory: QuestionCategoryInfo
@@ -31,6 +26,13 @@ interface QuestionsInfo {
     // user: UserInfo todo????
 
 }
+
+interface QuestionCategoryInfo {
+    id: number
+    value: string
+}
+
+
 type QuestionResult = {
     allQuestions: QuestionsInfo[]
 }

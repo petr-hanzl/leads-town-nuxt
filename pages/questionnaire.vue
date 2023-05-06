@@ -8,7 +8,7 @@
                             <QuestionSlider :question="q"/>
                         </div>
                         <div v-else>
-                            <QuestionYesNo :text="q.questionText"/>
+                            <QuestionYesNo :question="q"/>
                         </div>
 
                     </div>

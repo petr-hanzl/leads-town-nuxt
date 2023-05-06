@@ -106,7 +106,7 @@ const checkbox = useField('checkbox');
 const store = useUserStore()
 
 const submit = handleSubmit(userData => {
-    store.createUser(userData.firstname, userData.lastname, userData.email)
+    store.saveUser(userData.firstname, userData.lastname, userData.email)
     useRouter().push({name:'form'})
 });
 </script>

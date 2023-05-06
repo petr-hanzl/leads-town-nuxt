@@ -34,7 +34,7 @@ export const useUserStore = defineStore("userStore", {
         currentUser: null as UserInfo | null
     }),
     actions: {
-        createUser(firstName: string, lastName: string, email: string) {
+        saveUser(firstName: string, lastName: string, email: string) {
             const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
                 variables: {
                     email: email,
