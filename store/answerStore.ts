@@ -29,45 +29,73 @@ const CREATE_ANSWERS_MUTATION = gql`
     }
 `
 
+const CREATE_RESULT_MUTATION = gql`
+    mutation createResult($emailing: Int, $socialNetworks: Int, $ppc: Int, $userId: ID) {
+        createResult(emailing: $emailing, socialNetworks: $socialNetworks, ppc: $ppc, userId: $userId) {
+            user {
+                email
+            }
+        }
+    }
+`
+
 export const useAnswerStore = defineStore('userStore', {
     state: () => ({
-        userAnswerList: [] as AnswerInfo[],
-        userResult: new Map as Map<string, number>
+        userResult: new Map as Map<string, number>,
+        userAnswerMap: new Map as Map<number, number>,
     }),
     actions: {
-        // appendAnswer
-        appendAnswer(question: AnswerInfo) {
-            this.userAnswerList.push(question)
+        setAnswer(questionId: number, answerValue: number) {
+            console.log(questionId)
+            console.log(answerValue)
+            this.userAnswerMap.set(questionId, answerValue)
         },
 
-        // saveAllAnswers from array to DB
-        saveAllAnswers() {
-            const { mutate: createAnswers } = useMutation(CREATE_ANSWERS_MUTATION, {
+
+        // saveAllAnswers from array to DB todo rework to map
+        // saveAllAnswers() {
+        //     const { mutate: createAnswers } = useMutation(CREATE_ANSWERS_MUTATION, {
+        //         variables: {
+        //             answers: this.userAnswerList
+        //         },
+        //     })
+        //     createAnswers().then(res => {
+        //         // todo log about new questionnaire
+        //         if (res?.data) {
+        //             console.log("answers saved")
+        //         } else if (res?.errors) {
+        //             // todo log errors
+        //             console.log(res.errors)
+        //         }
+        //     })
+        // },
+
+        // createResult from appended answers todo rework to map
+        // createResult() {
+        //     this.userAnswerList.forEach((answer) => {
+        //         if (answer.question.answerCategory.value === 'Scale') {
+        //             this.userResult.set(answer.question.questionCategory.value, answer.answerValue)
+        //         } else {
+        //             this.userResult.set(answer.question.questionCategory.value, answer.answerValue*10)
+        //         }
+        //     })
+        // },
+
+        saveUserResult() {
+            const { mutate: createResult  } = useMutation(CREATE_RESULT_MUTATION, {
                 variables: {
-                    answers: this.userAnswerList
+                    emailing: this.userResult.get("emailing"),
+                    socialNetworks: this.userResult.get("socialNetworks"),
+                    ppc: this.userResult.get("ppc"),
                 },
             })
-            createAnswers().then(res => {
-                // todo log about new questionnaire
+            createResult().then(res => {
                 if (res?.data) {
-                    console.log("answers saved")
+                    console.log("result saved")
                 } else if (res?.errors) {
-                    // todo log errors
                     console.log(res.errors)
                 }
             })
-        },
-
-        // createResult from appended answers
-        createResult() {
-            this.userAnswerList.forEach((answer) => {
-                if (answer.question.answerCategory.value === 'Scale') {
-                    this.userResult.set(answer.question.questionCategory.value, answer.answerValue)
-                } else {
-                    this.userResult.set(answer.question.questionCategory.value, answer.answerValue*10)
-                }
-            })
-
         }
     }
 })
