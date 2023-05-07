@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
-import {UserInfo} from "~/store/users";
-import {AnswerCategoryInfo} from "~/store/answer";
+import {UserInfo} from "~/store/userStore";
+import {AnswerCategoryInfo} from "~/store/answerStore";
 import {UseQueryReturn} from "@vue/apollo-composable";
 
 const ALL_QUESTIONS_QUERY = gql`
@@ -17,20 +17,22 @@ const ALL_QUESTIONS_QUERY = gql`
     }
 `;
 
-interface QuestionCategoryInfo {
-    id: number
-    value: string
-}
-
-interface QuestionsInfo {
+export interface QuestionsInfo {
     id: number
     questionText: string
     questionCategory: QuestionCategoryInfo
     answerCategory: AnswerCategoryInfo
     active: boolean
-    user: UserInfo
+    // user: UserInfo todo????
 
 }
+
+interface QuestionCategoryInfo {
+    id: number
+    value: string
+}
+
+
 type QuestionResult = {
     allQuestions: QuestionsInfo[]
 }

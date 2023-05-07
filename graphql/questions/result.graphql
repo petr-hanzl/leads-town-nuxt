@@ -1,0 +1,7 @@
+type CreateResultMutationResponse {
+    id: ID
+    socialNetworks: Int
+    emailing: Int
+    ppc: Int
+    user: UserType
+}

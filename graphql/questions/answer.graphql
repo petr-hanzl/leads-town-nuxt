@@ -10,3 +10,13 @@ type AnswerCategoryType {
     value: String!
     questionSet: [QuestionType!]!
 }
+
+type CreateAnswerMutationResponse {
+    answers: AnswerType
+}
+
+input AnswerInput {
+    answerValue: Int,
+    questionId: ID,
+    userId: ID
+}
