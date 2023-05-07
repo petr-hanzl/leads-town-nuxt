@@ -3,7 +3,9 @@
         <v-row class="w-100">
             <!-- back button -->
             <v-col cols="6" class="d-flex justify-start">
-                <v-btn icon="mdi-keyboard-backspace" color="primary-lighten-2"></v-btn>
+                <nuxt-link :to="{name: 'form'}" >
+                    <v-btn icon="mdi-keyboard-backspace" color="primary-lighten-2"></v-btn>
+                </nuxt-link>
             </v-col>
             <!-- logo TODO nuxt images -->
             <v-col cols="6" class="d-flex justify-end">
@@ -75,7 +77,15 @@
 
 <script setup lang="ts">
 
-const questionType = true
+import Question from "~/components/newVersion/Question.vue";
+
+    const questionType = true
+
+
+    interface Props {
+        question: QuestionInfo
+    }
+    const props = defineProps<Props>()
 
 </script>
 

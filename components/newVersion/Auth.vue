@@ -1,4 +1,3 @@
-<!-- TODO toto si pak hod do indexu, bud zkopiruj kod a smaz Auth.vue nebo to vloz jako komponentu-->
 <template>
     <v-container fluid class="fill-height h-screen d-flex flex-column justify-space-between bg-white pa-0">
         <v-row class="w-100 h-100">
