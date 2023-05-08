@@ -1,0 +1,31 @@
+type UserType {
+    id: ID!
+    password: String!
+    isSuperuser: Boolean!
+
+    username: String!
+
+    isStaff: Boolean!
+
+    isActive: Boolean!
+
+    email: String!
+    firstName: String!
+    lastName: String!
+    acceptEmailing: Boolean!
+    token: String
+    answerSet: [AnswerType!]!
+    resultSet: [ResultType!]!
+}
+
+type ResultType {
+    id: ID!
+    socialNetworks: Int!
+    emailing: Int!
+    ppc: Int!
+    user: UserType
+}
+
+type CreateUserMutationResponse {
+    user:UserType
+}

@@ -1,7 +1,9 @@
 <template>
     <v-sheet class="rounded-xl pa-3 pa-sm-5" height="auto" elevation="3">
-        <p class="text-h6 text-center mb-4">{{ props.text }}</p>
+        <p class="text-h6 text-center mb-4">{{ props.question.questionText }}</p>
         <v-slider
+                @input="setAnswer(props.question.id, answerValue)"
+                v-model="answerValue"
                 color="primary"
                 min="1"
                 max="10"
@@ -13,9 +15,20 @@
 </template>
 
 <script setup lang="ts">
-    const props = defineProps({
-        text: String
-    })
+    import {QuestionsInfo} from "~/store/questionStore";
+    import {useAnswerStore} from "~/store/answerStore";
+
+    const store = useAnswerStore()
+    const { setAnswer } = store
+
+    let answerValue: number
+
+
+    interface Props {
+        question: QuestionsInfo
+    }
+
+    const props = defineProps<Props>()
 
 </script>
 

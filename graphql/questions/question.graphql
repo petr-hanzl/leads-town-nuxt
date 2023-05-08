@@ -1,0 +1,15 @@
+type QuestionType {
+    id: Int!
+    questionText: String!
+    active: Boolean!
+    weight: Int!
+    questionCategory: QuestionCategoryType
+    answerCategory: AnswerCategoryType
+    answerSet: [AnswerType!]!
+}
+
+type QuestionCategoryType {
+    id: ID!
+    value: String!
+    questionSet: [QuestionType!]!
+}

@@ -5,14 +5,11 @@ export default defineNuxtConfig({
         'nuxt-font-loader',
         '@vee-validate/nuxt',
         '@nuxtjs/apollo',
-        '@pinia/nuxt'
+        '@pinia/nuxt',
+        '@nuxt/image-edge',
     ],
     // @ts-ignore
-    image: {
-
-    },
     buildModules: [
-        '@nuxt/image',
         '@pinia/nuxt',
         {
             disableVuex: true
