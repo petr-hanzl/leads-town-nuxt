@@ -23,11 +23,7 @@
 
 
     const data = {
-      labels: [
-        'PPC',
-        'Sociální sítě',
-        'Emailing',
-      ],
+      labels: l,
       datasets: [
         {
             label: 'Výsledek',
@@ -37,7 +33,7 @@
                     useTheme().current.value.colors.error,
                     useTheme().current.value.colors.secondary,
                 ],
-            data: [12, 39, 10, 70, 39]
+            data: d,
         }
       ]
     }

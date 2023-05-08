@@ -84,15 +84,13 @@ import {useAnswerStore} from "~/store/answerStore";
     const route = useRoute();
     const router = useRouter();
 
-    const questionStore = useQuestionStore()
-    const answerStore = useAnswerStore()
-
-
     interface Props {
         question: QuestionsInfo
     }
-
     const props = defineProps<Props>()
+
+    const questionStore = useQuestionStore()
+    const answerStore = useAnswerStore()
 
     let slideValue = ref('slideValue')
 

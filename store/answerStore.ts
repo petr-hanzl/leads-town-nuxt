@@ -38,16 +38,18 @@ const CREATE_RESULT_MUTATION = gql`
     }
 `
 
-
-export const useAnswerStore = defineStore('userStore', {
-    state: () => ({
-        userResultMap: new Map as Map<string, number>,
-        userAnswerMap: new Map as Map<QuestionsInfo, number>,
+export const useAnswerStore = defineStore( "answerStore", {
+    state:() => ({
+        userResultMap: new Map() as Map<string, number>,
+        userAnswerMap: new Map() as Map<QuestionsInfo, number>,
     }),
     actions: {
         setAnswer(question: QuestionsInfo, answerValue: number) {
             if(isNaN(answerValue)) {
                 answerValue = 5
+            }
+            if (question.answerCategory.value !== 'Scale') {
+                answerValue = answerValue * 10
             }
             this.userAnswerMap.set(question, answerValue)
         },
@@ -62,15 +64,23 @@ export const useAnswerStore = defineStore('userStore', {
                 }
             })
 
+            // we wanna start at middle
+            this.userResultMap.forEach((result, category, m) => {
+                // @ts-ignore
+                m.set(category, m.get(category)+ 50)
+            })
+
         },
         saveUserResult() {
             const { mutate: createResult  } = useMutation(CREATE_RESULT_MUTATION, {
                 variables: {
-                    emailing: this.userResultMap.get("emailing"),
-                    socialNetworks: this.userResultMap.get("socialNetworks"),
-                    ppc: this.userResultMap.get("ppc"),
+                    emailing: this.userResultMap.get("E-mailing"),
+                    socialNetworks: this.userResultMap.get("Sociální sítě"),
+                    ppc: this.userResultMap.get("Výkonnostní marketing"),
                 },
             })
+
+
             createResult().then(res => {
                 if (res?.data) {
                     console.log("result saved")
@@ -86,4 +96,5 @@ export const useAnswerStore = defineStore('userStore', {
             return state.userResultMap
         }
     }
+
 })
