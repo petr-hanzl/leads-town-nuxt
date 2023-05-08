@@ -60,30 +60,6 @@ export const useQuestionStore = defineStore( "questionStore", {
             this.position = 0
 
         },
-        resetPosition() {
-            this.position = 0
-        },
-        //
-        // fetchAllQuestions() {
-        //     useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
-        //         .then(res => {
-        //             // todo works?
-        //             if (res.data.value){
-        //                 console.log(res.data.value.allQuestions)
-        //                 this.questionList = res.data.value.allQuestions
-        //
-        //             } else {
-        //                 console.log("no questions retrieved")
-        //             }
-        //         })
-        //
-        // },
-        isLastQuestion(position: number): boolean {
-            return position+1 === this.questionList.length
-        },
-        // getNextQuestion() {
-        //     return this.questionList.at(this.position)
-        // },
         nextPosition() {
             this.position++
         },
@@ -116,13 +92,3 @@ export const useQuestionStore = defineStore( "questionStore", {
     }
 
 })
-
-
-// const questions = reactive([]);
-//
-//
-// // query all questions from db
-
-// return{
-//     loadQuestions
-// }

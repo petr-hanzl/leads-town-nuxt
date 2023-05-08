@@ -81,7 +81,6 @@
 import {useQuestionStore, QuestionsInfo} from "~/store/questionStore";
 import {useAnswerStore} from "~/store/answerStore";
 
-
     const route = useRoute();
     const router = useRouter();
 
