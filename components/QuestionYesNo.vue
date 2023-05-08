@@ -21,12 +21,10 @@
     const store = useAnswerStore()
 
     const setNo = () => {
-        console.log(val.value)
         store.setAnswer(props.question.id, 0)
     }
 
     const setYes = () => {
-        console.log(val.value)
         store.setAnswer(props.question.id, 1)
     }
 

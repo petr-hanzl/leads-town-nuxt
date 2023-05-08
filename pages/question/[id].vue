@@ -8,15 +8,18 @@
 
     import {useQuestionStore} from "~/store/questionStore";
     const questionStore = useQuestionStore()
+    const route = useRoute();
 
-    await questionStore.fetchAllQuestions()
+    if (route.params.id === '0') {
+        questionStore.resetPosition()
+    }
 
 
 
 
-    const route = useRoute()
 
-    // route.params.id
+
+    //
 
 
 </script>

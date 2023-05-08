@@ -9,7 +9,7 @@
             </v-col>
             <!-- logo TODO nuxt images -->
             <v-col cols="6" class="d-flex justify-end">
-                <img src="assets/images/logo.png"  alt="logo leads town"/>
+                <nuxt-img src="/logo.png"  alt="leads town"/>
             </v-col>
         </v-row>
 
@@ -56,7 +56,7 @@
                         </v-col>
                         <v-col cols="12" class="d-flex justify-center">
                             <v-btn @click="setValue()" color="primary-lighten-1" size="x-large" prepend-icon="mdi-check" class="text-lowercase font-weight-bold rounded-pill">
-                                potvrdit
+                                <div v-if="questionStore.getNumberOfQuestions != route.params.id+1">potvrdit</div>
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -71,16 +71,18 @@
             </v-col>
             <!-- question number -->
             <v-col cols="6" class="d-flex justify-end align-end">
-                <p>03</p>
+                <p>{{+route.params.id+1}}/{{questionStore.getNumberOfQuestions}}</p>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script setup lang="ts">
-import {QuestionsInfo} from "~/store/questionStore";
-import {useQuestionStore} from "~/store/questionStore";
+import {useQuestionStore, QuestionsInfo} from "~/store/questionStore";
 import {useAnswerStore} from "~/store/answerStore";
+
+    const route = useRoute();
+    const router = useRouter();
 
     const questionStore = useQuestionStore()
     const answerStore = useAnswerStore()
@@ -89,10 +91,9 @@ import {useAnswerStore} from "~/store/answerStore";
         question: QuestionsInfo
     }
 
-
     const props = defineProps<Props>()
 
-    const router = useRouter();
+
 
 
     let slideValue = ref('slideValue')
@@ -108,17 +109,19 @@ import {useAnswerStore} from "~/store/answerStore";
     }
     const setYes = () => {
         // answerStore.setAnswer(props.question.id, 1)
+        console.log("id"+props.question.id)
         nextQuestion()
     }
 
     const setNo = () => {
         // answerStore.setAnswer(props.question.id, 0)
+        console.log("id"+props.question.id)
         nextQuestion()
 
     }
 
     const setValue = () => {
-        answerStore.setAnswer(props.question.id, +slideValue.value)
+        // answerStore.setAnswer(props.question.id, +slideValue.value)
         console.log("id"+props.question.id)
         nextQuestion()
 

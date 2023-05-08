@@ -6,10 +6,10 @@ export default defineNuxtConfig({
         '@vee-validate/nuxt',
         '@nuxtjs/apollo',
         '@pinia/nuxt',
+        '@nuxt/image-edge',
     ],
     // @ts-ignore
     buildModules: [
-        '@nuxt/image',
         '@pinia/nuxt',
         {
             disableVuex: true

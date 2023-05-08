@@ -6,7 +6,7 @@
                 <v-row class="w-100 pa-6">
                     <!-- logo TODO nuxt images -->
                     <v-col class="d-flex justify-end" v-if="mdAndDown">
-                        <img src="assets/images/logo.png"  alt="logo leads town"/>
+                        <nuxt-img src="logo.png"  alt="logo leads town"/>
                     </v-col>
                 </v-row>
                 <!-- text -->
@@ -102,11 +102,11 @@
                             </form>
                         </v-row>
 
-                        <v-row class="w-100 text-primary-lighten-2 text-h6">
-                            <v-col class="d-flex justify-end align-end">
-                                <p>02</p>
-                            </v-col>
-                        </v-row>
+<!--                        <v-row class="w-100 text-primary-lighten-2 text-h6">-->
+<!--                            <v-col class="d-flex justify-end align-end">-->
+<!--                                <p>02</p>-->
+<!--                            </v-col>-->
+<!--                        </v-row>-->
 
                     </v-container>
                 </v-sheet>
@@ -121,6 +121,7 @@
 import {useField, useForm} from 'vee-validate'
 import {useUserStore} from "~/store/userStore";
 import { useDisplay } from "vuetify";
+import {useQuestionStore} from "~/store/questionStore";
 
 const { mdAndDown } = useDisplay();
 
@@ -156,13 +157,17 @@ const checkbox = useField('checkbox');
 
 // retrieve store
 const userStore = useUserStore()
+const questionStore = useQuestionStore()
+
+await questionStore.fetchAllQuestions()
 
 
 const submit = handleSubmit(userData => {
     userStore.saveUser(userData.firstname, userData.lastname, userData.email)
     // todo rework with promise
         // todo use nuxt link
-    useRouter().push({name:'form'})
+    // const position = questionStore.currentPosition()
+    // useRouter().push({name:`question/${{position}}`})
 });
 
 </script>

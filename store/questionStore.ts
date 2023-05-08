@@ -50,7 +50,13 @@ export const useQuestionStore = defineStore( "questionStore", {
             const { data } = await useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
             if (data.value){
                 this.questionList = data.value.allQuestions
+            } else {
+                console.log("cannot fetch questions")
             }
+            this.position = 0
+        },
+        resetPosition() {
+            this.position = 0
         },
         //
         // fetchAllQuestions() {
@@ -84,7 +90,11 @@ export const useQuestionStore = defineStore( "questionStore", {
         },
         getCurrentQuestion() {
             return this.questionList.at(this.position)
+        },
+        getQuestionAt(position: number) {
+            return this.questionList.at(position)
         }
+
 
     },
 
@@ -92,6 +102,9 @@ export const useQuestionStore = defineStore( "questionStore", {
         getAllQuestions(state): QuestionsInfo[] {
             return state.questionList
         },
+        getNumberOfQuestions(state): number {
+            return state.questionList.length
+        }
 
 
 
