@@ -43,9 +43,15 @@
 </template>
 
 <script setup lang="ts">
-  const submit = () => {
 
-      useRouter().push({ path: `/result` })
+    import {useAnswerStore} from "~/store/answerStore";
+
+    const store = useAnswerStore()
+
+    const submit = () => {
+        store.createResult()
+        store.saveUserResult()
+        useRouter().push({ path: `/result` })
   }
 </script>
 

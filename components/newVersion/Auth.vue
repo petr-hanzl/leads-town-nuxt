@@ -161,7 +161,6 @@ await questionStore.fetchAllQuestions()
 const submit = handleSubmit(userData => {
     userStore.saveUser(userData.firstname, userData.lastname, userData.email)
     // todo rework with promise
-        // todo use nuxt link
     useRouter().push({path:'question/0'})
 });
 

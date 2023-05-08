@@ -46,7 +46,6 @@ export const useUserStore = defineStore("userStore", {
             createUser().then(res => {
                 if(res?.data) {
                     this.currentUser = res.data.createUser.user
-                    console.log(this.currentUser)
                 } else if (res?.errors) {
                     console.log(res.errors)
                 }

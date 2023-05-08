@@ -81,14 +81,13 @@
 import {useQuestionStore, QuestionsInfo} from "~/store/questionStore";
 import {useAnswerStore} from "~/store/answerStore";
 
+
     const route = useRoute();
     const router = useRouter();
 
     const questionStore = useQuestionStore()
     const answerStore = useAnswerStore()
 
-    console.log(+route.params.id+1)
-    console.log(questionStore.getNumberOfQuestions)
 
     interface Props {
         question: QuestionsInfo
@@ -97,11 +96,6 @@ import {useAnswerStore} from "~/store/answerStore";
     const props = defineProps<Props>()
 
     let slideValue = ref('slideValue')
-
-    const submit = () => {
-        // answerStore.setAnswer(props.question.id, +slideValue.value)
-        console.log("submit")
-    }
 
     const nextQuestion = () => {
         questionStore.nextPosition()
@@ -118,18 +112,18 @@ import {useAnswerStore} from "~/store/answerStore";
         router.push({ path: `/question/${questionStore.currentPosition()}` })
     }
     const setYes = () => {
-        // answerStore.setAnswer(props.question.id, 1)
+        answerStore.setAnswer(props.question, 1)
         nextQuestion()
     }
 
     const setNo = () => {
-        // answerStore.setAnswer(props.question.id, 0)
+        answerStore.setAnswer(props.question, 0)
         nextQuestion()
 
     }
 
     const setValue = () => {
-        // answerStore.setAnswer(props.question.id, +slideValue.value)
+        answerStore.setAnswer(props.question, +slideValue.value)
         nextQuestion()
 
     }

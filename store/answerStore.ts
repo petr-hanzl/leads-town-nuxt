@@ -38,61 +38,37 @@ const CREATE_RESULT_MUTATION = gql`
     }
 `
 
+
 export const useAnswerStore = defineStore('userStore', {
     state: () => ({
-        userResult: new Map as Map<string, number>,
-        userAnswerMap: new Map as Map<number, number>,
+        userResultMap: new Map as Map<string, number>,
+        userAnswerMap: new Map as Map<QuestionsInfo, number>,
     }),
     actions: {
-        setAnswer(questionId: number, answerValue: number) {
-            console.log(questionId)
+        setAnswer(question: QuestionsInfo, answerValue: number) {
             if(isNaN(answerValue)) {
                 answerValue = 5
             }
-            console.log(answerValue)
-            this.userAnswerMap.set(questionId, answerValue)
+            this.userAnswerMap.set(question, answerValue)
         },
-        setResult() {
+        createResult() {
+            this.userAnswerMap.forEach((answer, question) => {
+                const currentResult = this.userResultMap.get(question.questionCategory.value)
 
+                if(currentResult !== undefined) {
+                    this.userResultMap.set(question.questionCategory.value, currentResult + answer)
+                } else {
+                    this.userResultMap.set(question.questionCategory.value, answer)
+                }
+            })
 
         },
-
-
-        // saveAllAnswers from array to DB todo rework to map
-        // saveAllAnswers() {
-        //     const { mutate: createAnswers } = useMutation(CREATE_ANSWERS_MUTATION, {
-        //         variables: {
-        //             answers: this.userAnswerList
-        //         },
-        //     })
-        //     createAnswers().then(res => {
-        //         // todo log about new questionnaire
-        //         if (res?.data) {
-        //             console.log("answers saved")
-        //         } else if (res?.errors) {
-        //             // todo log errors
-        //             console.log(res.errors)
-        //         }
-        //     })
-        // },
-
-        // createResult from appended answers todo rework to map
-        // createResult() {
-        //     this.userAnswerList.forEach((answer) => {
-        //         if (answer.question.answerCategory.value === 'Scale') {
-        //             this.userResult.set(answer.question.questionCategory.value, answer.answerValue)
-        //         } else {
-        //             this.userResult.set(answer.question.questionCategory.value, answer.answerValue*10)
-        //         }
-        //     })
-        // },
-
         saveUserResult() {
             const { mutate: createResult  } = useMutation(CREATE_RESULT_MUTATION, {
                 variables: {
-                    emailing: this.userResult.get("emailing"),
-                    socialNetworks: this.userResult.get("socialNetworks"),
-                    ppc: this.userResult.get("ppc"),
+                    emailing: this.userResultMap.get("emailing"),
+                    socialNetworks: this.userResultMap.get("socialNetworks"),
+                    ppc: this.userResultMap.get("ppc"),
                 },
             })
             createResult().then(res => {
@@ -102,6 +78,12 @@ export const useAnswerStore = defineStore('userStore', {
                     console.log(res.errors)
                 }
             })
+        }
+    },
+
+    getters: {
+        getResult(state): Map<string, number> {
+            return state.userResultMap
         }
     }
 })
