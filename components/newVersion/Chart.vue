@@ -1,8 +1,8 @@
 <template xmlns="http://www.w3.org/1999/html">
     <v-container fluid class="fill-height h-screen d-flex flex-column justify-space-between pa-6">
-        <v-row class="w-100">
-            <v-col cols="6" class="d-flex justify-end">
-                <nuxt-img src="/logo.png"  alt="leads town"/>
+        <v-row class="w-100" justify="end">
+            <v-col class="d-flex justify-end" cols="6">
+                <nuxt-img alt="leads town" height="15" src="/logo.png"/>
             </v-col>
         </v-row>
 

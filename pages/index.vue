@@ -1,5 +1,7 @@
 <template>
-  <Auth/>
+    <v-app>
+        <Auth/>
+    </v-app>
 </template>
 
 <script setup lang="ts">

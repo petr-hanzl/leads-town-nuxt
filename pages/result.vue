@@ -1,5 +1,7 @@
 <template>
-    <Chart/>
+    <v-app>
+        <Chart/>
+    </v-app>
 </template>
 
 <script setup lang="ts">

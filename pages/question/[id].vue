@@ -1,5 +1,7 @@
 <template>
-    <Question :question="useQuestionStore().getCurrentQuestion()"/>
+    <v-app>
+        <Question :question="useQuestionStore().getCurrentQuestion()"/>
+    </v-app>
 </template>
 
 <script setup lang="ts">

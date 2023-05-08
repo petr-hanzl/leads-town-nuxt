@@ -3,10 +3,9 @@
         <v-row class="w-100 h-100">
             <v-col cols="12" lg="4" class="px-3 pb-0">
                 <!-- back button -->
-                <v-row class="w-100 pa-6">
-                    <!-- logo TODO nuxt images -->
-                    <v-col class="d-flex justify-end" v-if="mdAndDown">
-                        <nuxt-img src="logo.png"  alt="logo leads town"/>
+                <v-row class="pa-6">
+                    <v-col v-if="mdAndDown" class="d-flex justify-end">
+                        <nuxt-img alt="logo leads town" height="15" src="logo.png"/>
                     </v-col>
                 </v-row>
                 <!-- text -->
@@ -36,10 +35,10 @@
                 <v-sheet color="primary" class="h-100 w-100 rounded-corner d-flex align-center">
                     <v-container fluid class="fill-height d-flex flex-column justify-space-between px-6 pb-9">
 
-                        <v-row class="w-100 pt-2" v-if="!mdAndDown">
+                        <v-row v-if="!mdAndDown" class="w-100 pt-2">
                             <!-- logo TODO nuxt images -->
                             <v-col class="d-flex justify-end">
-                                <img src="assets/images/logo.png"  alt="logo leads town"/>
+                                <nuxt-img alt="logo leads town" height="15" src="logo.png" style="filter: invert(100%);"/>
                             </v-col>
                         </v-row>
 
