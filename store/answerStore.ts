@@ -1,5 +1,4 @@
 import {defineStore} from "pinia";
-import {integer} from "vscode-languageserver-types";
 import {QuestionsInfo} from "~/store/questionStore";
 
 interface AnswerInfo {
@@ -52,6 +51,10 @@ export const useAnswerStore = defineStore('userStore', {
             }
             console.log(answerValue)
             this.userAnswerMap.set(questionId, answerValue)
+        },
+        setResult() {
+
+
         },
 
 

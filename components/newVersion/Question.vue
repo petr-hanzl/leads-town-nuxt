@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <v-container fluid class="fill-height h-screen d-flex flex-column justify-space-between pa-6">
         <v-row class="w-100">
             <!-- back button -->
@@ -87,20 +87,30 @@ import {useAnswerStore} from "~/store/answerStore";
     const questionStore = useQuestionStore()
     const answerStore = useAnswerStore()
 
+    console.log(+route.params.id+1)
+    console.log(questionStore.getNumberOfQuestions)
+
     interface Props {
         question: QuestionsInfo
     }
 
     const props = defineProps<Props>()
 
-
-
-
     let slideValue = ref('slideValue')
+
+    const submit = () => {
+        // answerStore.setAnswer(props.question.id, +slideValue.value)
+        console.log("submit")
+    }
 
     const nextQuestion = () => {
         questionStore.nextPosition()
-        router.push({ path: `/question/${questionStore.currentPosition()}` })
+        if (+route.params.id+1 === questionStore.getNumberOfQuestions) {
+            router.push({path:'/submit'})
+        } else {
+
+            router.push({ path: `/question/${questionStore.currentPosition()}` })
+        }
     }
 
     const previousQuestion = () => {
@@ -109,23 +119,22 @@ import {useAnswerStore} from "~/store/answerStore";
     }
     const setYes = () => {
         // answerStore.setAnswer(props.question.id, 1)
-        console.log("id"+props.question.id)
         nextQuestion()
     }
 
     const setNo = () => {
         // answerStore.setAnswer(props.question.id, 0)
-        console.log("id"+props.question.id)
         nextQuestion()
 
     }
 
     const setValue = () => {
         // answerStore.setAnswer(props.question.id, +slideValue.value)
-        console.log("id"+props.question.id)
         nextQuestion()
 
     }
+
+
 
 </script>
 

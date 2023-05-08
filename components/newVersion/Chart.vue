@@ -17,12 +17,10 @@
         'PPC',
         'Sociální sítě',
         'Emailing',
-        'Label',
-        'Label',
       ],
       datasets: [
         {
-            label: 'Data',
+            label: 'Výsledek',
             backgroundColor:
                 [
                     useTheme().current.value.colors.primary,

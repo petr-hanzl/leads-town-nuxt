@@ -85,19 +85,15 @@
                                 ></v-checkbox>
 
                                 <v-row class="d-flex justify-end">
-                                    <!--<NuxtLink :to="{name:'form'}">-->
-                                    <nuxt-link to="/question/0">
-                                        <v-btn
-                                            class="me-4 text-body-1 text-primary font-weight-bold"
-                                            type="submit"
-                                            rounded
-                                            color="secondary"
-                                            size="large"
-                                        >
-                                            Odeslat
-                                        </v-btn>
-                                    </nuxt-link>
-                                    <!-- </NuxtLink>-->
+                                    <v-btn
+                                        class="me-4 text-body-1 text-primary font-weight-bold"
+                                        type="submit"
+                                        rounded
+                                        color="secondary"
+                                        size="large"
+                                    >
+                                        odeslat
+                                    </v-btn>
                                 </v-row>
                             </form>
                         </v-row>
@@ -166,8 +162,7 @@ const submit = handleSubmit(userData => {
     userStore.saveUser(userData.firstname, userData.lastname, userData.email)
     // todo rework with promise
         // todo use nuxt link
-    // const position = questionStore.currentPosition()
-    // useRouter().push({name:`question/${{position}}`})
+    useRouter().push({path:'question/0'})
 });
 
 </script>

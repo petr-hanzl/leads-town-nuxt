@@ -43,17 +43,22 @@ type QuestionResult = {
 export const useQuestionStore = defineStore( "questionStore", {
     state:() => ({
         questionList: [] as QuestionsInfo[],
-        position: 0
+        position: 0,
+        questionCategories: new Map<number, string>
     }),
     actions: {
         async fetchAllQuestions() {
             const { data } = await useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
             if (data.value){
                 this.questionList = data.value.allQuestions
+                this.questionList.forEach((question) => {
+                    this.questionCategories.set(question.id, question.questionCategory.value)
+                })
             } else {
                 console.log("cannot fetch questions")
             }
             this.position = 0
+
         },
         resetPosition() {
             this.position = 0
