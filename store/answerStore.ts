@@ -38,16 +38,18 @@ const CREATE_RESULT_MUTATION = gql`
     }
 `
 
-
-export const useAnswerStore = defineStore('userStore', {
-    state: () => ({
-        userResultMap: new Map as Map<string, number>,
-        userAnswerMap: new Map as Map<QuestionsInfo, number>,
+export const useAnswerStore = defineStore( "answerStore", {
+    state:() => ({
+        userResultMap: new Map() as Map<string, number>,
+        userAnswerMap: new Map() as Map<QuestionsInfo, number>,
     }),
     actions: {
         setAnswer(question: QuestionsInfo, answerValue: number) {
             if(isNaN(answerValue)) {
                 answerValue = 5
+            }
+            if (question.answerCategory.value !== 'Scale') {
+                answerValue = answerValue * 10
             }
             this.userAnswerMap.set(question, answerValue)
         },
@@ -62,6 +64,12 @@ export const useAnswerStore = defineStore('userStore', {
                 }
             })
 
+            // we wanna start at middle
+            this.userResultMap.forEach((result, category, m) => {
+                // @ts-ignore
+                m.set(category, m.get(category)+ 50)
+            })
+
         },
         saveUserResult() {
             const { mutate: createResult  } = useMutation(CREATE_RESULT_MUTATION, {
@@ -71,6 +79,18 @@ export const useAnswerStore = defineStore('userStore', {
                     ppc: this.userResultMap.get("ppc"),
                 },
             })
+            console.log(this.userResultMap.get("emailing"))
+            console.log(this.userResultMap.get("socialNetworks"))
+            console.log(this.userResultMap.get("ppc"))
+            console.log(this.userResultMap.size)
+
+            this.userResultMap.forEach((result, category)=> {
+                console.log(category)
+                console.log(result)
+            })
+
+
+
             createResult().then(res => {
                 if (res?.data) {
                     console.log("result saved")
@@ -86,4 +106,5 @@ export const useAnswerStore = defineStore('userStore', {
             return state.userResultMap
         }
     }
+
 })
