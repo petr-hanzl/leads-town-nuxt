@@ -79,8 +79,6 @@ export const useAnswerStore = defineStore( "answerStore", {
                     ppc: this.userResultMap.get("Výkonnostní marketing"),
                 },
             })
-
-
             createResult().then(res => {
                 if (res?.data) {
                     console.log("result saved")
@@ -96,5 +94,4 @@ export const useAnswerStore = defineStore( "answerStore", {
             return state.userResultMap
         }
     }
-
 })
