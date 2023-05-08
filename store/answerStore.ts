@@ -46,7 +46,7 @@ export const useAnswerStore = defineStore( "answerStore", {
     actions: {
         setAnswer(question: QuestionsInfo, answerValue: number) {
             if(isNaN(answerValue)) {
-                answerValue = 5
+                answerValue = 0
             }
             if (question.answerCategory.value !== 'Scale') {
                 answerValue = answerValue * 10

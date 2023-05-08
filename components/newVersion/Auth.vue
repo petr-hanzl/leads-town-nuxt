@@ -36,13 +36,12 @@
                     <v-container fluid class="fill-height d-flex flex-column justify-space-between px-6 pb-9">
 
                         <v-row v-if="!mdAndDown" class="w-100 pt-2">
-                            <!-- logo TODO nuxt images -->
                             <v-col class="d-flex justify-end">
                                 <nuxt-img alt="logo leads town" height="15" src="logo.png" style="filter: invert(100%);"/>
                             </v-col>
                         </v-row>
 
-                        <v-row justify="center" class="w-100 pe-lg-16 align-center mt-10 mt-lg-0">
+                        <v-row class="w-100 pe-lg-16 mt-10 mt-lg-0" justify="center">
                             <form @submit.prevent="submit" class="pe-lg-16 me-lg-16">
                                 <v-text-field
                                     rounded
@@ -79,7 +78,7 @@
                                     v-model="checkbox.value.value"
                                     :error-messages="checkbox.errorMessage.value!"
                                     value="1"
-                                    label="Přijímám zasílání marketingových emailů"
+                                    label="Přijímám zasílání marketingových emailů a souhlasím s uložením osobních údajů k mark"
                                     type="checkbox"
                                 ></v-checkbox>
 

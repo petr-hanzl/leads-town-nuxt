@@ -9,7 +9,7 @@
             </v-col>
             <!-- logo TODO nuxt images -->
             <v-col cols="6" class="d-flex justify-end">
-                <nuxt-img src="/logo.png"  alt="leads town"/>
+                <nuxt-img src="/logo.png"  alt="leads town" height="15"/>
             </v-col>
         </v-row>
 
@@ -43,7 +43,7 @@
                             <v-slider
                                 v-model="slideValue"
                                 color="primary-lighten-1"
-                                min="1"
+                                min="0"
                                 max="10"
                                 step="1"
                                 show-ticks
