@@ -1,5 +1,5 @@
 type QuestionType {
-    id: ID!
+    id: Int!
     questionText: String!
     active: Boolean!
     weight: Int!

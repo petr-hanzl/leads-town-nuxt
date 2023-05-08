@@ -3,12 +3,17 @@
 </template>
 
 <script setup lang="ts">
+  import Auth from "~/components/newVersion/Auth.vue";
+  import {useQuestionStore} from "~/store/questionStore";
 
+  const questionStore = useQuestionStore()
 
+  if (questionStore.questionList.length === 0) {
+      await questionStore.fetchAllQuestions()
+  }
 
-
-import Auth from "~/components/newVersion/Auth.vue";
 </script>
+
 
 
 <style scoped>

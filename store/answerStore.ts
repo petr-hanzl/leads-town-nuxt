@@ -47,6 +47,9 @@ export const useAnswerStore = defineStore('userStore', {
     actions: {
         setAnswer(questionId: number, answerValue: number) {
             console.log(questionId)
+            if(isNaN(answerValue)) {
+                answerValue = 5
+            }
             console.log(answerValue)
             this.userAnswerMap.set(questionId, answerValue)
         },

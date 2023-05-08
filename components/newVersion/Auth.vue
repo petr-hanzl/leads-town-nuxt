@@ -4,9 +4,6 @@
             <v-col cols="12" lg="4" class="px-3 pb-0">
                 <!-- back button -->
                 <v-row class="w-100 pa-6">
-                    <v-col class="d-flex justify-start">
-                        <v-btn icon="mdi-keyboard-backspace" color="primary-lighten-2"></v-btn>
-                    </v-col>
                     <!-- logo TODO nuxt images -->
                     <v-col class="d-flex justify-end" v-if="mdAndDown">
                         <img src="assets/images/logo.png"  alt="logo leads town"/>
@@ -89,15 +86,17 @@
 
                                 <v-row class="d-flex justify-end">
                                     <!--<NuxtLink :to="{name:'form'}">-->
-                                    <v-btn
-                                        class="me-4 text-body-1 text-primary font-weight-bold"
-                                        type="submit"
-                                        rounded
-                                        color="secondary"
-                                        size="large"
-                                    >
-                                        Odeslat
-                                    </v-btn>
+                                    <nuxt-link to="/question/0">
+                                        <v-btn
+                                            class="me-4 text-body-1 text-primary font-weight-bold"
+                                            type="submit"
+                                            rounded
+                                            color="secondary"
+                                            size="large"
+                                        >
+                                            Odeslat
+                                        </v-btn>
+                                    </nuxt-link>
                                     <!-- </NuxtLink>-->
                                 </v-row>
                             </form>
@@ -119,9 +118,8 @@
 
 <script setup lang="ts">
 
-
 import {useField, useForm} from 'vee-validate'
-import {useUserStore} from "~/store/users";
+import {useUserStore} from "~/store/userStore";
 import { useDisplay } from "vuetify";
 
 const { mdAndDown } = useDisplay();
@@ -157,10 +155,13 @@ let email = useField('email');
 const checkbox = useField('checkbox');
 
 // retrieve store
-const store = useUserStore()
+const userStore = useUserStore()
+
 
 const submit = handleSubmit(userData => {
-    store.createUser(userData.firstname, userData.lastname, userData.email)
+    userStore.saveUser(userData.firstname, userData.lastname, userData.email)
+    // todo rework with promise
+        // todo use nuxt link
     useRouter().push({name:'form'})
 });
 

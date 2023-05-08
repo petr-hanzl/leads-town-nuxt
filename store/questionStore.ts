@@ -6,6 +6,7 @@ import {UseQueryReturn} from "@vue/apollo-composable";
 const ALL_QUESTIONS_QUERY = gql`
     query {
         allQuestions{
+            id,
             questionText,
             questionCategory{
                 value
@@ -35,12 +36,14 @@ interface QuestionCategoryInfo {
 
 type QuestionResult = {
     allQuestions: QuestionsInfo[]
+
 }
 
 
 export const useQuestionStore = defineStore( "questionStore", {
     state:() => ({
         questionList: [] as QuestionsInfo[],
+        position: 0
     }),
     actions: {
         async fetchAllQuestions() {
@@ -49,11 +52,49 @@ export const useQuestionStore = defineStore( "questionStore", {
                 this.questionList = data.value.allQuestions
             }
         },
+        //
+        // fetchAllQuestions() {
+        //     useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
+        //         .then(res => {
+        //             // todo works?
+        //             if (res.data.value){
+        //                 console.log(res.data.value.allQuestions)
+        //                 this.questionList = res.data.value.allQuestions
+        //
+        //             } else {
+        //                 console.log("no questions retrieved")
+        //             }
+        //         })
+        //
+        // },
+        isLastQuestion(position: number): boolean {
+            return position+1 === this.questionList.length
+        },
+        // getNextQuestion() {
+        //     return this.questionList.at(this.position)
+        // },
+        nextPosition() {
+            this.position++
+        },
+        currentPosition(): number {
+            return this.position
+        },
+        previousPosition() {
+            this.position--
+        },
+        getCurrentQuestion() {
+            return this.questionList.at(this.position)
+        }
+
     },
+
     getters: {
         getAllQuestions(state): QuestionsInfo[] {
             return state.questionList
-        }
+        },
+
+
+
     }
 
 })

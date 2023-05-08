@@ -40,8 +40,7 @@
     const store = useQuestionStore()
 
     // fetch
-    const { fetchAllQuestions } = store
-    await fetchAllQuestions()
+    await store.fetchAllQuestions()
 
 
 
