@@ -16,7 +16,7 @@
                 </v-col>
                 <v-container class="fill-height">
                     <v-row class="h-50" justify="center">
-                        <Bar :data="data" />
+                        <Bar :data="data" :options="options"/>
                     </v-row>
                 </v-container>
             </v-col>
@@ -38,6 +38,18 @@
     import { Chart, registerables } from 'chart.js';
     Chart.register(...registerables)
 
+    const options = {
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            y: {
+                max: 100,
+            }
+        },
+    }
 
     // todo use this when answerStore works
     const l = new Array<string>
