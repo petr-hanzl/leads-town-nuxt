@@ -12,7 +12,7 @@ type AnswerCategoryType {
 }
 
 type CreateAnswerMutationResponse {
-    answers: AnswerType
+    answers: [AnswerType]
 }
 
 input AnswerInput {

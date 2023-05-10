@@ -18,14 +18,6 @@ type UserType {
     resultSet: [ResultType!]!
 }
 
-type ResultType {
-    id: ID!
-    socialNetworks: Int!
-    emailing: Int!
-    ppc: Int!
-    user: UserType
-}
-
 type CreateUserMutationResponse {
     user:UserType
 }

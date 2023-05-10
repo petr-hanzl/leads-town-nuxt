@@ -7,6 +7,12 @@ interface AnswerInfo {
 
 }
 
+interface AnswerInput {
+    answerValue: number,
+    questionId: number,
+    userId: number
+}
+
 export interface AnswerCategoryInfo {
     id: number
     value: string
@@ -31,8 +37,10 @@ const CREATE_ANSWERS_MUTATION = gql`
 const CREATE_RESULT_MUTATION = gql`
     mutation createResult($emailing: Int, $socialNetworks: Int, $ppc: Int, $userId: ID) {
         createResult(emailing: $emailing, socialNetworks: $socialNetworks, ppc: $ppc, userId: $userId) {
-            user {
-                email
+            result {
+                user {
+                    email
+                }
             }
         }
     }
@@ -53,6 +61,28 @@ export const useAnswerStore = defineStore( "answerStore", {
             }
             this.userAnswerMap.set(question, answerValue)
         },
+        createAnswers(userId: number) {
+            const answerList: AnswerInput[] = []
+            let answer: AnswerInput
+            this.userAnswerMap.forEach((value: number, question: QuestionsInfo)=> {
+                answer.userId = userId
+                answer.answerValue = value
+                answer.questionId = question.id
+                answerList.push(answer)
+            })
+
+            const { mutate: createAnswers  } = useMutation(CREATE_ANSWERS_MUTATION, {
+                variables: {
+                    answers: answerList
+                },
+            })
+            createAnswers().then(res => {
+                if (res?.data) {
+                } else if (res?.errors) {
+                    console.log(res.errors)
+                }
+            })
+        },
         createResult() {
             this.userAnswerMap.forEach((answer, question) => {
                 const currentResult = this.userResultMap.get(question.questionCategory.value)
@@ -71,9 +101,10 @@ export const useAnswerStore = defineStore( "answerStore", {
             })
 
         },
-        saveUserResult() {
+        saveUserResult(userId: number) {
             const { mutate: createResult  } = useMutation(CREATE_RESULT_MUTATION, {
                 variables: {
+                    userId: userId,
                     emailing: this.userResultMap.get("E-mailing"),
                     socialNetworks: this.userResultMap.get("Sociální sítě"),
                     ppc: this.userResultMap.get("Výkonnostní marketing"),
