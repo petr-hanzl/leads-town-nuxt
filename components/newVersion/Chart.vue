@@ -59,18 +59,6 @@
         d.push(result)
     })
 
-    const options = {
-        plugins: {
-            legend: {
-                display: false,
-            },
-        },
-        scales: {
-            y: {
-                max: 100,
-            }
-        },
-    }
 
     const data = {
 
