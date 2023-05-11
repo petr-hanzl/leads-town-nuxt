@@ -46,7 +46,8 @@
                                 min="0"
                                 max="10"
                                 step="1"
-                                show-ticks
+                                :ticks="sliderValues"
+                                show-ticks="always"
                                 thumb-label
                                 elevation="16"
                                 thumb-size="24"
@@ -124,6 +125,12 @@ import {useAnswerStore} from "~/store/answerStore";
         nextQuestion()
 
     }
+
+const sliderValues = {
+    0: "Vůbec ne",
+    10: "Mám to promakané"
+}
+
 
 
 
