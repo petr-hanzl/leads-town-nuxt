@@ -16,7 +16,7 @@
                 </v-col>
                 <v-container class="fill-height">
                     <v-row class="h-50" justify="center">
-                        <Bar :data="data" />
+                        <Bar :data="data" :options="options"/>
                     </v-row>
                 </v-container>
             </v-col>
@@ -47,13 +47,24 @@
         d.push(result)
     })
 
-
+    const options = {
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            y: {
+                max: 100,
+            }
+        },
+    }
 
     const data = {
+
       labels: l,
       datasets: [
         {
-            label: 'Výsledek',
             backgroundColor:
                 [
                     useTheme().current.value.colors.primary,
