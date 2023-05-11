@@ -55,8 +55,10 @@
 
         const userId = userStore.getCurrentUser.id
 
+
+        answerStore.saveUserAnswers(userId)
         answerStore.saveUserResult(userId)
-        // answerStore.createAnswers(userId) todo doesnt work - id is undefined
+
 
         useRouter().push({ path: `/result` })
   }

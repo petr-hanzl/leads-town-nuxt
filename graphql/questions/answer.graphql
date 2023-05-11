@@ -12,6 +12,10 @@ type AnswerCategoryType {
 }
 
 type CreateAnswerMutationResponse {
+    answer: AnswerType
+}
+
+type CreateAnswersMutationResponse {
     answers: [AnswerType]
 }
 

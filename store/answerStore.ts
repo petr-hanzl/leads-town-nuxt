@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {QuestionsInfo} from "~/store/questionStore";
+import {UserInfo} from "~/store/userStore";
 
 interface AnswerInfo {
     answerValue: number
@@ -17,6 +18,22 @@ export interface AnswerCategoryInfo {
     id: number
     value: string
 }
+
+const CREATE_ANSWER_MUTATION = gql`
+    mutation createAnswer($userId: ID, $answerValue: Int, $questionId: ID) {
+        createAnswer(userId: $userId, questionId: $questionId, answerValue: $answerValue) {
+            answer {
+                user {
+                    email
+                }
+                question {
+                    questionText
+                }
+                answerValue
+            }
+        }
+    }
+`
 
 const CREATE_ANSWERS_MUTATION = gql`
     mutation createAnswers($answers: [AnswerInput]) {
@@ -61,9 +78,34 @@ export const useAnswerStore = defineStore( "answerStore", {
             }
             this.userAnswerMap.set(question, answerValue)
         },
+        saveUserAnswers(userId: number) {
+
+            this.userAnswerMap.forEach((value: number, question: QuestionsInfo)=> {
+                const { mutate: createAnswer } = useMutation(CREATE_ANSWER_MUTATION, {
+                    variables: {
+                        userId: userId,
+                        answerValue: value,
+                        questionId: question.id
+
+                    },
+                })
+                createAnswer().then(res => {
+                    if (res?.data) {
+
+                    } else if (res?.errors) {
+                        console.log(res.errors)
+                    }
+                })
+            })
+        },
+        // todo debug
         createAnswers(userId: number) {
             const answerList: AnswerInput[] = []
-            let answer: AnswerInput
+            let answer: AnswerInput = {
+                userId: 0,
+                answerValue: 0,
+                questionId: 0,
+            }
             this.userAnswerMap.forEach((value: number, question: QuestionsInfo)=> {
                 answer.userId = userId
                 answer.answerValue = value
@@ -112,7 +154,6 @@ export const useAnswerStore = defineStore( "answerStore", {
             })
             createResult().then(res => {
                 if (res?.data) {
-                    console.log("result saved")
                 } else if (res?.errors) {
                     console.log(res.errors)
                 }
