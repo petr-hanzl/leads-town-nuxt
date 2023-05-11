@@ -45,12 +45,21 @@
 <script setup lang="ts">
 
     import {useAnswerStore} from "~/store/answerStore";
+    import {useUserStore} from "~/store/userStore";
 
-    const store = useAnswerStore()
+    const answerStore = useAnswerStore()
+    const userStore = useUserStore()
 
     const submit = () => {
-        store.createResult()
-        store.saveUserResult()
+        answerStore.createResult()
+
+        const userId = userStore.getCurrentUser.id
+
+
+        answerStore.saveUserAnswers(userId)
+        answerStore.saveUserResult(userId)
+
+
         useRouter().push({ path: `/result` })
   }
 </script>

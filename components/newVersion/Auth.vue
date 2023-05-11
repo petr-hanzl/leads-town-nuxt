@@ -5,7 +5,7 @@
                 <!-- back button -->
                 <v-row class="pa-6">
                     <v-col v-if="mdAndDown" class="d-flex justify-end">
-                        <nuxt-img alt="logo leads town" height="15" src="logo.png"/>
+<!--                        <nuxt-img alt="logo leads town" height="15" src="logo.png"/>-->
                     </v-col>
                 </v-row>
                 <!-- text -->
@@ -37,7 +37,7 @@
 
                         <v-row v-if="!mdAndDown" class="w-100 pt-2">
                             <v-col class="d-flex justify-end">
-                                <nuxt-img alt="logo leads town" height="15" src="logo.png" style="filter: invert(100%);"/>
+<!--                                <nuxt-img alt="logo leads town" height="15" src="logo.png" style="filter: invert(100%);"/>-->
                             </v-col>
                         </v-row>
 
@@ -78,7 +78,7 @@
                                     v-model="checkbox.value.value"
                                     :error-messages="checkbox.errorMessage.value!"
                                     value="1"
-                                    label="Přijímám zasílání marketingových emailů a souhlasím s uložením osobních údajů k mark"
+                                    label="Přijímám zasílání marketingových emailů a souhlasím s uložením osobních údajů k marketingovým účelům"
                                     type="checkbox"
                                 ></v-checkbox>
 

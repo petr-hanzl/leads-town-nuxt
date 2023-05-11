@@ -59,13 +59,24 @@
         d.push(result)
     })
 
-
+    const options = {
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            y: {
+                max: 100,
+            }
+        },
+    }
 
     const data = {
+
       labels: l,
       datasets: [
         {
-            label: 'Výsledek',
             backgroundColor:
                 [
                     useTheme().current.value.colors.primary,
