@@ -32,11 +32,7 @@ const CREATE_USER_MUTATION = gql`
 const VERIFY_TOKEN_MUTATION = gql`
     mutation verifyToken($token: String){
         verifyToken(token: $token) {
-            payload {
-                username,
-                exp,
-                origIat,
-            }
+            payload 
         }
     }
 `
@@ -44,21 +40,24 @@ const VERIFY_TOKEN_MUTATION = gql`
 export const useUserStore = defineStore("userStore", {
     state: () => ({
         currentUser: null as UserInfo | null,
-        tokenExp: 0
+        exp: 0
     }),
     actions: {
-        verifyToken() {
+        isTokenActive(): boolean {
+            return this.exp > Date.now()
+        },
+        async verifyJWT(token: string) {
             const {mutate:verifyToken} = useMutation(VERIFY_TOKEN_MUTATION, {
                 variables: {
-                    token: localStorage.getItem("token")
+                    token: token
                 },
             })
             verifyToken().then(res => {
                 if (res?.data) {
-                    console.log(res.data)
-                    this.tokenExp = res.data.Verify.payload.exp
-                }
+                    console.log("verify token: " + res.data.verifyToken.payload.exp)
 
+                    this.exp = res.data.verifyToken.payload.exp * 1000
+                }
             })
         },
         saveUser(firstName: string, lastName: string, email: string) {

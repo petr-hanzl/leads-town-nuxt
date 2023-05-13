@@ -8,15 +8,21 @@
     import {useQuestionStore} from "~/store/questionStore";
     import Question from "~/components/newVersion/Question.vue";
 
-    const token = localStorage.getItem("token")
-
-    if (token == undefined) {
-        useRouter().push({path:'/'})
-    }
-
     const {useUserStore} = await import("~/store/userStore")
+    const userStore = useUserStore()
 
-    // useUserStore().verifyToken()
+    // todo
+    // console.log("is active 1")
+    // if (!userStore.isTokenActive()) {
+    //     console.log("verify")
+    //     await userStore.verifyJWT(localStorage.getItem("token"))
+    //     console.log("is active 2")
+    //     if (!userStore.isTokenActive()) {
+    //         console.log("push")
+    //         useRouter().push({path:'/'})
+    //     }
+    // }
+
 
 
 </script>

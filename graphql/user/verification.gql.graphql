@@ -1,9 +1,0 @@
-type VerifyTokenMutationResponse {
-    payload: Payload
-}
-
-type Payload {
-    username: String,
-    exp: Int
-    origIat: Int
-}
