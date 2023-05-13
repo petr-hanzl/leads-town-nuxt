@@ -1,7 +1,7 @@
 type AnswerType {
     id: ID!
     answerValue: Int!
-    user: UserType
+    user: ExtendUserType
     question: QuestionType
 }
 

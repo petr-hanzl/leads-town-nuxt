@@ -3,11 +3,18 @@ type ResultType {
     socialNetworks: Int!
     emailing: Int!
     ppc: Int!
-    user: UserType
+    user: ExtendUserType
 }
 
 
 
 type CreateResultMutationResponse {
     result: ResultType
+}
+
+input ResultInput {
+    socialNetworks: Int
+    emailing: Int
+    ppc: Int
+    userId: ID
 }

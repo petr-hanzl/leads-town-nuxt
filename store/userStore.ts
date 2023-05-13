@@ -18,7 +18,7 @@ const emptyUserInfo = (): UserInfo => ({
 
 const CREATE_USER_MUTATION = gql`
     mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
-        createUser(acceptEmailing:$acceptEmailing, email:$email, firstName:$firstName, lastName:$lastName){
+        createUser(extendUserInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}){
             user{
                 id,
                 firstName,
@@ -29,11 +29,38 @@ const CREATE_USER_MUTATION = gql`
         }
     }`
 
+const VERIFY_TOKEN_MUTATION = gql`
+    mutation verifyToken($token: String){
+        verifyToken(token: $token) {
+            payload {
+                username,
+                exp,
+                origIat,
+            }
+        }
+    }
+`
+
 export const useUserStore = defineStore("userStore", {
     state: () => ({
-        currentUser: null as UserInfo | null
+        currentUser: null as UserInfo | null,
+        tokenExp: 0
     }),
     actions: {
+        verifyToken() {
+            const {mutate:verifyToken} = useMutation(VERIFY_TOKEN_MUTATION, {
+                variables: {
+                    token: localStorage.getItem("token")
+                },
+            })
+            verifyToken().then(res => {
+                if (res?.data) {
+                    console.log(res.data)
+                    this.tokenExp = res.data.Verify.payload.exp
+                }
+
+            })
+        },
         saveUser(firstName: string, lastName: string, email: string) {
             const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
                 variables: {
@@ -46,8 +73,9 @@ export const useUserStore = defineStore("userStore", {
             createUser().then(res => {
                 if(res?.data) {
                     this.currentUser = res.data.createUser.user
+                    localStorage.setItem("token", res.data.createUser.user.token)
                 } else if (res?.errors) {
-                    console.log(res.errors)
+                    console.log(JSON.stringify(res.errors, null, 2))
                 }
             })
         }

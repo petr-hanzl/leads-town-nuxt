@@ -1,4 +1,4 @@
-type UserType {
+type ExtendUserType {
     id: ID!
     password: String!
     isSuperuser: Boolean!
@@ -19,5 +19,12 @@ type UserType {
 }
 
 type CreateUserMutationResponse {
-    user:UserType
+    user:ExtendUserType
+}
+
+input ExtendUserInput {
+    email: String
+    firstName: String
+    lastName: String
+    acceptEmailing: Boolean
 }

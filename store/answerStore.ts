@@ -21,7 +21,7 @@ export interface AnswerCategoryInfo {
 
 const CREATE_ANSWER_MUTATION = gql`
     mutation createAnswer($userId: ID, $answerValue: Int, $questionId: ID) {
-        createAnswer(userId: $userId, questionId: $questionId, answerValue: $answerValue) {
+        createAnswer(answerInput: {userId: $userId, questionId: $questionId, answerValue: $answerValue}) {
             answer {
                 user {
                     email
@@ -53,7 +53,7 @@ const CREATE_ANSWERS_MUTATION = gql`
 
 const CREATE_RESULT_MUTATION = gql`
     mutation createResult($emailing: Int, $socialNetworks: Int, $ppc: Int, $userId: ID) {
-        createResult(emailing: $emailing, socialNetworks: $socialNetworks, ppc: $ppc, userId: $userId) {
+        createResult(resultInput: {emailing: $emailing, socialNetworks: $socialNetworks, ppc: $ppc, userId: $userId}) {
             result {
                 user {
                     email

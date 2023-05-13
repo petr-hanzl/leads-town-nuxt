@@ -1,8 +1,9 @@
 type Mutation {
-    createUser(email: String, firstName: String, lastName: String, acceptEmailing: Boolean): CreateUserMutationResponse
-    createAnswer(userId: ID, questionId: ID, answerValue: Int): CreateAnswerMutationResponse
+    createUser(extendUserInput: ExtendUserInput): CreateUserMutationResponse
+    createAnswer(answerInput: AnswerInput): CreateAnswerMutationResponse
     createAnswers(answers: [AnswerInput]): CreateAnswersMutationResponse
-    createResult(emailing: Int, socialNetworks: Int, ppc: Int, userId: ID): CreateResultMutationResponse
+    createResult(resultInput: ResultInput): CreateResultMutationResponse
+    verifyToken(token: String): VerifyTokenMutationResponse
 }
 
 
