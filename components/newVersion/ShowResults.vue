@@ -44,8 +44,10 @@
 
 <script setup lang="ts">
 
-    import {useAnswerStore} from "~/store/answerStore";
-    import {useUserStore} from "~/store/userStore";
+    const  {useAnswerStore} = await import("~/store/answerStore")
+    const  {useUserStore} = await import("~/store/userStore")
+
+
 
     const answerStore = useAnswerStore()
     const userStore = useUserStore()

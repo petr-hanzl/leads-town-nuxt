@@ -18,7 +18,7 @@ const emptyUserInfo = (): UserInfo => ({
 
 const CREATE_USER_MUTATION = gql`
     mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
-        createUser(acceptEmailing:$acceptEmailing, email:$email, firstName:$firstName, lastName:$lastName){
+        createUser(extendUserInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}){
             user{
                 id,
                 firstName,
@@ -29,11 +29,37 @@ const CREATE_USER_MUTATION = gql`
         }
     }`
 
+const VERIFY_TOKEN_MUTATION = gql`
+    mutation verifyToken($token: String){
+        verifyToken(token: $token) {
+            payload 
+        }
+    }
+`
+
 export const useUserStore = defineStore("userStore", {
     state: () => ({
-        currentUser: null as UserInfo | null
+        currentUser: null as UserInfo | null,
+        exp: 0
     }),
     actions: {
+        isTokenActive(): boolean {
+            return this.exp > Date.now()
+        },
+        async verifyJWT(token: string) {
+            const {mutate:verifyToken} = useMutation(VERIFY_TOKEN_MUTATION, {
+                variables: {
+                    token: token
+                },
+            })
+            verifyToken().then(res => {
+                if (res?.data) {
+                    console.log("verify token: " + res.data.verifyToken.payload.exp)
+
+                    this.exp = res.data.verifyToken.payload.exp * 1000
+                }
+            })
+        },
         saveUser(firstName: string, lastName: string, email: string) {
             const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
                 variables: {
@@ -46,8 +72,9 @@ export const useUserStore = defineStore("userStore", {
             createUser().then(res => {
                 if(res?.data) {
                     this.currentUser = res.data.createUser.user
+                    localStorage.setItem("token", res.data.createUser.user.token)
                 } else if (res?.errors) {
-                    console.log(res.errors)
+                    console.log(JSON.stringify(res.errors, null, 2))
                 }
             })
         }
