@@ -83,15 +83,17 @@
                                 ></v-checkbox>
 
                                 <v-row class="d-flex justify-end">
-                                    <v-btn
-                                        class="me-4 text-body-1 text-primary font-weight-bold"
-                                        type="submit"
-                                        rounded
-                                        color="secondary"
-                                        size="large"
-                                    >
-                                        odeslat
-                                    </v-btn>
+                                    <nuxt-link :to="{path:'/question/0'}">
+                                      <v-btn
+                                          class="me-4 text-body-1 text-primary font-weight-bold"
+                                          type="submit"
+                                          rounded
+                                          color="secondary"
+                                          size="large"
+                                      >
+                                          odeslat
+                                      </v-btn>
+                                    </nuxt-link>
                                 </v-row>
                             </form>
                         </v-row>
@@ -158,8 +160,17 @@ await questionStore.fetchAllQuestions()
 
 const submit = handleSubmit(userData => {
     userStore.saveUser(userData.firstname, userData.lastname, userData.email)
-    // todo rework with promise
-    useRouter().push({path:'question/0'})
+        .then(res => {
+            if(res?.data) {
+                userStore.currentUser = res.data.createUser.user
+                localStorage.setItem("token", res.data.createUser.user.token)
+            } else if (res?.errors) {
+                console.log("err")
+                console.log(res.errors)
+            }
+            // useRouter().push({path:'question/0'})
+        })
+
 });
 
 </script>

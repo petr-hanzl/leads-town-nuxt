@@ -4,6 +4,7 @@ type Mutation {
     createAnswers(answers: [AnswerInput]): CreateAnswersMutationResponse
     createResult(resultInput: ResultInput): CreateResultMutationResponse
     verifyToken(token: String): VerifyTokenMutationResponse
+    refreshToken(token: String): RefreshTokenMutationResponse
 }
 
 

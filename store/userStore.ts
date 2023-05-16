@@ -37,6 +37,16 @@ const VERIFY_TOKEN_MUTATION = gql`
     }
 `
 
+const REFRESH_TOKEN_MUTATION = gql`
+    mutation refreshToken($token: String) {
+        refreshToken(token: $token){
+            payload
+            refreshExpiresIn
+            token
+        }
+    }
+`
+
 export const useUserStore = defineStore("userStore", {
     state: () => ({
         currentUser: null as UserInfo | null,
@@ -46,21 +56,49 @@ export const useUserStore = defineStore("userStore", {
         isTokenActive(): boolean {
             return this.exp > Date.now()
         },
-        async verifyJWT(token: string) {
+        verifyJWT(token: string) {
             const {mutate:verifyToken} = useMutation(VERIFY_TOKEN_MUTATION, {
                 variables: {
                     token: token
                 },
             })
-            verifyToken().then(res => {
-                if (res?.data) {
-                    console.log("verify token: " + res.data.verifyToken.payload.exp)
+            verifyToken()
+                .then(res => {
+                    if (res?.data) {
+                        this.exp = res.data.verifyToken.payload.exp * 1000
+                    } else if (res?.errors) {
 
-                    this.exp = res.data.verifyToken.payload.exp * 1000
+                    }
+            })
+                .catch(err => {
+                    this.refreshJWT(token)
+                        .then(res => {
+                            if (res?.data) {
+                                this.exp = res.data.verifyToken.payload.exp * 1000
+                            } else if (res?.errors) {
+                                console.log("user store err")
+                                console.log(res.errors)
+                            }
+                        })
+                        .catch(err => {
+                            console.log("catch refresh jwt")
+                            console.log(err)
+                        })
+                })
+        },
+        async refreshJWT(token: string) {
+            const {mutate:refreshToken} = useMutation(REFRESH_TOKEN_MUTATION, {
+                variables: {
+                    token: token
                 }
             })
+            return refreshToken()
+
         },
-        saveUser(firstName: string, lastName: string, email: string) {
+        renewJWTExp(timestamp: number) {
+            this.exp = timestamp
+        },
+        async saveUser(firstName: string, lastName: string, email: string) {
             const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
                 variables: {
                     email: email,
@@ -69,14 +107,7 @@ export const useUserStore = defineStore("userStore", {
                     acceptEmailing: true
                 },
             })
-            createUser().then(res => {
-                if(res?.data) {
-                    this.currentUser = res.data.createUser.user
-                    localStorage.setItem("token", res.data.createUser.user.token)
-                } else if (res?.errors) {
-                    console.log(JSON.stringify(res.errors, null, 2))
-                }
-            })
+            return createUser()
         }
     },
     getters: {

@@ -2,4 +2,10 @@ type VerifyTokenMutationResponse {
     payload: GenericScalar
 }
 
+type RefreshTokenMutationResponse {
+    payload: GenericScalar
+    refreshExpiresIn: Int
+    token: String
+}
+
 scalar GenericScalar

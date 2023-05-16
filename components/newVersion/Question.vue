@@ -79,8 +79,14 @@
 </template>
 
 <script setup lang="ts">
-import {useQuestionStore, QuestionsInfo} from "~/store/questionStore";
-import {useAnswerStore} from "~/store/answerStore";
+    import {useQuestionStore, QuestionsInfo} from "~/store/questionStore";
+    import {useAnswerStore} from "~/store/answerStore";
+    import {useUserStore} from "~/store/userStore"
+    import {tr} from "vuetify/locale";
+
+    const userStore = useUserStore()
+    const questionStore = useQuestionStore()
+    const answerStore = useAnswerStore()
 
     const route = useRoute();
     const router = useRouter();
@@ -90,8 +96,44 @@ import {useAnswerStore} from "~/store/answerStore";
     }
     const props = defineProps<Props>()
 
-    const questionStore = useQuestionStore()
-    const answerStore = useAnswerStore()
+    // onBeforeMount(()=>{
+    //     let loggedIn = false
+    //
+    //     console.log("process client")
+    //
+    //     if (process.client) {
+    //         const token = localStorage.getItem("token")
+    //         console.log("is active 1")
+    //
+    //         // is an active token loaded?
+    //         if (!userStore.isTokenActive()) {
+    //             console.log("verify")
+    //
+    //             // is token
+    //             if (token) {
+    //                 userStore.verifyJWT(token)
+    //                     .then(res => {
+    //                         if (res?.data) {
+    //                             console.log("verify token: " + res.data.verifyToken.payload.exp)
+    //                             userStore.exp = res.data.verifyToken.payload.exp * 1000
+    //                         }
+    //                         console.log("is active 2")
+    //                         if (userStore.isTokenActive()) {
+    //                             loggedIn = true
+    //                         }
+    //                     })
+    //
+    //             }
+    //
+    //
+    //
+    //         }
+    //
+    //     }
+    // })
+    //
+    //
+
 
     let slideValue = ref('slideValue')
 
