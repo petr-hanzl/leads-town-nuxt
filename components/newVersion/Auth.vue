@@ -113,7 +113,7 @@
 <script setup lang="ts">
 
 import {useField, useForm} from 'vee-validate'
-import {useUserStore} from "~/store/userStore";
+import {useAuthStore} from "~/store/authStore";
 import { useDisplay } from "vuetify";
 import {useQuestionStore} from "~/store/questionStore";
 
@@ -150,14 +150,14 @@ let email = useField('email');
 const checkbox = useField('checkbox');
 
 // retrieve store
-const userStore = useUserStore()
+const authStore = useAuthStore()
 const questionStore = useQuestionStore()
 
 await questionStore.fetchAllQuestions()
 
 
 const submit = handleSubmit(userData => {
-    userStore.saveUser(userData.firstname, userData.lastname, userData.email)
+    authStore.saveUser(userData.firstname, userData.lastname, userData.email)
     // todo rework with promise
     useRouter().push({path:'question/0'})
 });

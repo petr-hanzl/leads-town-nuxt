@@ -1,8 +1,7 @@
 import {defineStore} from "pinia";
 import {QuestionsInfo} from "~/store/questionStore";
-import {UserInfo} from "~/store/userStore";
 
-interface AnswerInfo {
+export interface AnswerInfo {
     answerValue: number
     question: QuestionsInfo
 

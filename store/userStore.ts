@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import {AnswerInfo} from "~/store/answerStore";
 
 export interface UserInfo {
     id: number
@@ -6,85 +7,59 @@ export interface UserInfo {
     firstName: string
     lastName: string
     token: string
+    resultSet: Result[],
+    answerSet: AnswerInfo[]
 }
 
-const emptyUserInfo = (): UserInfo => ({
-    id: 0,
-    email: '',
-    firstName: '',
-    lastName: '',
-    token: ''
-})
+interface Result {
+    ppc: number
+    emailing: number
+    social_networks: number
+}
 
-const CREATE_USER_MUTATION = gql`
-    mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
-        createUser(extendUserInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}){
-            user{
-                id,
-                firstName,
-                lastName,
-                email,
-                token
+
+const ALL_USERS = gql`
+    query{
+        allUsers{
+            id
+            email
+            firstName
+            lastName
+            resultSet{
+                emailing
+                socialNetworks
+                ppc
             }
-        }
-    }`
-
-const VERIFY_TOKEN_MUTATION = gql`
-    mutation verifyToken($token: String){
-        verifyToken(token: $token) {
-            payload 
+            answerSet {
+                answerValue
+                question {
+                    questionText
+                    questionCategory {
+                        value
+                    }
+                    answerCategory {
+                        value
+                    }
+                }
+            }
         }
     }
 `
 
+type UserResult = {
+    allUsers: UserInfo[]
+}
+
 export const useUserStore = defineStore("userStore", {
     state: () => ({
-        currentUser: null as UserInfo | null,
-        exp: 0
+        userList: [] as UserInfo[]
     }),
     actions: {
-        isTokenActive(): boolean {
-            return this.exp > Date.now()
-        },
-        async verifyJWT(token: string) {
-            const {mutate:verifyToken} = useMutation(VERIFY_TOKEN_MUTATION, {
-                variables: {
-                    token: token
-                },
-            })
-            verifyToken().then(res => {
-                if (res?.data) {
-                    console.log("verify token: " + res.data.verifyToken.payload.exp)
-
-                    this.exp = res.data.verifyToken.payload.exp * 1000
-                }
-            })
-        },
-        saveUser(firstName: string, lastName: string, email: string) {
-            const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
-                variables: {
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    acceptEmailing: true
-                },
-            })
-            createUser().then(res => {
-                if(res?.data) {
-                    this.currentUser = res.data.createUser.user
-                    localStorage.setItem("token", res.data.createUser.user.token)
-                } else if (res?.errors) {
-                    console.log(JSON.stringify(res.errors, null, 2))
-                }
-            })
-        }
-    },
-    getters: {
-        getCurrentUser(state): UserInfo {
-            if (state.currentUser) {
-                return state.currentUser
+        async fetchAllUsers() {
+            const{ data } = await useAsyncQuery<UserResult>(ALL_USERS)
+            if (data.value) {
+                this.userList = data.value.allUsers
             }
-            return emptyUserInfo()
         }
     }
 })

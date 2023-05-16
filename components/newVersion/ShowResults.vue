@@ -45,17 +45,17 @@
 <script setup lang="ts">
 
     const  {useAnswerStore} = await import("~/store/answerStore")
-    const  {useUserStore} = await import("~/store/userStore")
+    const  {useAuthStore} = await import("~/store/authStore")
 
 
 
     const answerStore = useAnswerStore()
-    const userStore = useUserStore()
+    const authStore = useAuthStore()
 
     const submit = () => {
         answerStore.createResult()
 
-        const userId = userStore.getCurrentUser.id
+        const userId = authStore.getCurrentUser.id
 
 
         answerStore.saveUserAnswers(userId)

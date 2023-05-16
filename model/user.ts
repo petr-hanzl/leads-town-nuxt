@@ -1,4 +1,4 @@
-import {UserInfo} from "~/store/userStore";
+import {UserInfo} from "~/store/authStore";
 
 export class User {
     readonly id: number

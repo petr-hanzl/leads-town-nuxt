@@ -1,7 +1,5 @@
 import {defineStore} from 'pinia'
-import {UserInfo} from "~/store/userStore";
 import {AnswerCategoryInfo} from "~/store/answerStore";
-import {UseQueryReturn} from "@vue/apollo-composable";
 
 const ALL_QUESTIONS_QUERY = gql`
     query {
@@ -24,8 +22,6 @@ export interface QuestionsInfo {
     questionCategory: QuestionCategoryInfo
     answerCategory: AnswerCategoryInfo
     active: boolean
-    // user: UserInfo todo????
-
 }
 
 interface QuestionCategoryInfo {
