@@ -1,11 +1,8 @@
 <template>
-    <v-card
-            class="mx-auto"
-            max-width="600"
-    >
-        <v-list v-for="user in userStore.userList">
-            <nuxt-link to="/" style="text-decoration: none; color: inherit;">
-                <v-list-item :title="user.email" />
+    <v-card class="mx-auto">
+        <v-list style="column-count: 2">
+            <nuxt-link style="text-decoration: none; color: inherit;" to="/">
+                <v-list-item v-for="user in userStore.userList" :title="user.email" class="listHover" rounded="xl"/>
             </nuxt-link>
         </v-list>
     </v-card>
@@ -20,5 +17,9 @@
 </script>
 
 <style scoped>
+
+.listHover:hover {
+    background: rgb(var(--v-theme-primary), 0.1);
+}
 
 </style>
