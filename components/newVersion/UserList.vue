@@ -1,18 +1,26 @@
 <template>
     <v-card class="mx-auto">
         <v-list style="column-count: 2">
-            <nuxt-link style="text-decoration: none; color: inherit;" to="/">
-                <v-list-item v-for="user in userStore.userList" :title="user.email" class="listHover" rounded="xl"/>
-            </nuxt-link>
+            <v-list-item v-for="user in userStore.userList" :title="user.email" class="listHover" rounded="xl" @click="pushUserPage(user)"/>
         </v-list>
     </v-card>
 </template>
 
 <script setup lang="ts">
-  import {useUserStore} from "~/store/userStore"
-  const userStore = useUserStore()
+    import {UserInfo, useUserStore} from "~/store/userStore"
+    const userStore = useUserStore()
 
-  await userStore.fetchAllUsers()
+
+    // only fetch if store is empty
+    if (userStore.userList.length === 0) {
+        await userStore.fetchAllUsers()
+    }
+
+
+    const pushUserPage = (user: UserInfo) => {
+        userStore.setViewedUser(user)
+        useRouter().push({path:`/u/${user.id}`})
+    }
 
 </script>
 

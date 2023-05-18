@@ -52,7 +52,8 @@ type UserResult = {
 
 export const useUserStore = defineStore("userStore", {
     state: () => ({
-        userList: [] as UserInfo[]
+        userList: [] as UserInfo[],
+        currentViewedUser: null as UserInfo | null,
     }),
     actions: {
         async fetchAllUsers() {
@@ -60,6 +61,9 @@ export const useUserStore = defineStore("userStore", {
             if (data.value) {
                 this.userList = data.value.allUsers
             }
+        },
+        setViewedUser(user: UserInfo) {
+            this.currentViewedUser = user
         }
     }
 })

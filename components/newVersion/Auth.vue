@@ -111,7 +111,6 @@
 </template>
 
 <script setup lang="ts">
-
 import {useField, useForm} from 'vee-validate'
 import {useAuthStore} from "~/store/authStore";
 import { useDisplay } from "vuetify";

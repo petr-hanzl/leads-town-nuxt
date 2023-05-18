@@ -10,7 +10,7 @@ dist
 *.log
 node_modules/
 
-# IDE user config
+# IDE u config
 .vscode/
 .idea/
 .vs/
