@@ -2,6 +2,21 @@ import {defineStore} from "pinia";
 import {UserInfo} from "~/store/userStore";
 
 
+export interface LoginInput {
+    email: string
+    password: string
+}
+
+const LOGIN_USER_MUTATION = gql`
+    mutation authLogin($email: String!, $password: String!) {
+        authLogin(loginInput: {email: $email, password: $password}) {
+            id
+            email
+            token
+        }
+    }
+`
+
 const emptyUserInfo = (): UserInfo => ({
     id: 0,
     email: '',
@@ -36,6 +51,23 @@ export const useAuthStore = defineStore("authStore", {
         exp: 0
     }),
     actions: {
+        async loginUser(email: string, password: string) {
+            const { mutate: login } = useMutation(LOGIN_USER_MUTATION, {
+                variables: {
+                    email: email,
+                    password: password
+                }
+            })
+            login()
+                .then((res) => {
+                    if (res?.data) {
+                        useRouter().push({path:'u'})
+                    }
+                })
+                .catch((e) => {
+                    console.log("err")
+                })
+        },
         isTokenActive(): boolean {
             return this.exp > Date.now()
         },

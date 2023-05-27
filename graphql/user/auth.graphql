@@ -1,0 +1,8 @@
+input AuthLoginInput {
+    email: String!
+    password: String!
+
+}
+extend type Mutation {
+    authLogin(loginInput: AuthLoginInput!): User!
+}

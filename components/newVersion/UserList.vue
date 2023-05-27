@@ -17,7 +17,6 @@
     // }
     await userStore.fetchAllUsers()
 
-    console.log(userStore.userList)
 
     const pushUserPage = (user: UserInfo) => {
         userStore.setViewedUser(user)

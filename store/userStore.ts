@@ -57,9 +57,7 @@ export const useUserStore = defineStore("userStore", {
     }),
     actions: {
         async fetchAllUsers() {
-            console.log("fetch")
             const{ data } = await useAsyncQuery<UserResult>(ALL_USERS)
-            console.log(data.value)
             if (data.value) {
                 this.userList = data.value.listUsers
             }
