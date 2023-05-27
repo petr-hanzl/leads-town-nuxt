@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {UserInfo} from "~/store/userStore";
+import {decodeJwt} from 'jose'
 
 
 export interface LoginInput {
@@ -34,16 +35,10 @@ const CREATE_USER_MUTATION = gql`
             firstName,
             lastName,
             email,
+            token
         }
     }`
 
-const VERIFY_TOKEN_MUTATION = gql`
-    mutation verifyToken($token: String){
-        verifyToken(token: $token) {
-            payload 
-        }
-    }
-`
 
 export const useAuthStore = defineStore("authStore", {
     state: () => ({
@@ -51,6 +46,9 @@ export const useAuthStore = defineStore("authStore", {
         exp: 0
     }),
     actions: {
+        isAuthenticated(): boolean {
+            return this.exp > Date.now()
+        },
         async loginUser(email: string, password: string) {
             const { mutate: login } = useMutation(LOGIN_USER_MUTATION, {
                 variables: {
@@ -61,29 +59,23 @@ export const useAuthStore = defineStore("authStore", {
             login()
                 .then((res) => {
                     if (res?.data) {
-                        useRouter().push({path:'u'})
+                        if(process.client) {
+                            localStorage.setItem("token", res.data.authLogin.token)
+                        }
+
+                        const jwtToken = decodeJwt(res.data.authLogin.token)
+                        if (jwtToken.exp) {
+                            this.exp = jwtToken.exp * 1000
+                        }
+
+                        console.log(Date.now())
+                        console.log(this.exp)
+                        useRouter().push({path:'admin/u'})
                     }
                 })
                 .catch((e) => {
-                    console.log("err")
+                    console.log(e)
                 })
-        },
-        isTokenActive(): boolean {
-            return this.exp > Date.now()
-        },
-        async verifyJWT(token: string) {
-            const {mutate:verifyToken} = useMutation(VERIFY_TOKEN_MUTATION, {
-                variables: {
-                    token: token
-                },
-            })
-            verifyToken().then(res => {
-                if (res?.data) {
-                    console.log("verify token: " + res.data.verifyToken.payload.exp)
-
-                    this.exp = res.data.verifyToken.payload.exp * 1000
-                }
-            })
         },
         saveUser(firstName: string, lastName: string, email: string) {
             const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
@@ -94,15 +86,15 @@ export const useAuthStore = defineStore("authStore", {
                     acceptEmailing: true
                 },
             })
-            createUser().then(res => {
-                // @ts-ignore
+            createUser()
+                .then(res => {
                 if(res?.data) {
-                    console.log(res.data.createUser.id)
                     this.currentUser = res.data.createUser
-                } else if (res?.errors) {
-                    console.log(JSON.stringify(res.errors, null, 2))
                 }
             })
+                .catch((e) => {
+                    console.log(e)
+                })
         }
     },
     getters: {

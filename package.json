@@ -10,12 +10,15 @@
     "start": "nuxt start"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@mdi/font": "^7.2.96",
     "@nuxt/image": "^0.7.1",
     "@nuxt/image-edge": "^1.0.0-28050764.aaee7ac",
     "@nuxtjs/apollo": "^5.0.0-alpha.6",
     "@nuxtjs/vuetify": "^1.12.3",
     "@pinia/nuxt": "^0.4.9",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^18",
     "nuxt": "^3.4.3",
     "nuxt-font-loader": "^2.3.1"
@@ -26,10 +29,12 @@
     "@vee-validate/nuxt": "^4.8.6",
     "chart.js": "^4.3.0",
     "graphql": "^16.6.0",
+    "jsonwebtoken": "^9.0.0",
     "nuxt-material-design-icons": "^1.0.4",
     "nuxt-webfontloader": "^1.1.0",
     "pinia": "^2.0.35",
     "sass": "^1.62.1",
+    "ts-jose": "^4.14.4",
     "vue-chartjs": "^5.2.0",
     "vuetify": "^3.2.2"
   },

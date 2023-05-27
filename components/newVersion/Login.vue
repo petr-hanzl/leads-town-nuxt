@@ -123,7 +123,6 @@ await questionStore.fetchAllQuestions()
 const submit = handleSubmit(userData => {
     authStore.loginUser(userData.email, userData.password)
 
-    // todo rework with promise
 });
 
 </script>

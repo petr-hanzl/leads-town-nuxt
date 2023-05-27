@@ -10,13 +10,17 @@
   import {UserInfo} from "~/store/userStore";
   import {useUserStore} from "~/store/userStore";
 
+  definePageMeta({
+      middleware: 'auth'
+  })
+
   const userStore = useUserStore()
   let currentUser: UserInfo
 
   if (userStore.currentViewedUser) {
       currentUser = userStore.currentViewedUser
   } else {
-      useRouter().push({path: "/u"})
+      useRouter().push({path: "/admin/u"})
   }
 
 

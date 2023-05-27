@@ -18,9 +18,12 @@
     await userStore.fetchAllUsers()
 
 
+    const token = useCookie("token")
+    console.log(token)
+
     const pushUserPage = (user: UserInfo) => {
         userStore.setViewedUser(user)
-        useRouter().push({path:`/u/${user.id}`})
+        return navigateTo(`/admin/u/${user.id}`)
     }
 
 </script>
