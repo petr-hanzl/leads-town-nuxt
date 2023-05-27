@@ -1,26 +1,18 @@
-type AnswerType {
+type Answer {
     id: ID!
     answerValue: Int!
-    user: ExtendUserType
-    question: QuestionType
+    user: User!
+    question: Question!
 }
 
-type AnswerCategoryType {
+type AnswerCategory {
     id: ID!
-    value: String!
-    questionSet: [QuestionType!]!
-}
-
-type CreateAnswerMutationResponse {
-    answer: AnswerType
-}
-
-type CreateAnswersMutationResponse {
-    answers: [AnswerType]
+    category: String!
 }
 
 input AnswerInput {
-    answerValue: Int,
-    questionId: ID,
-    userId: ID
+    answerValue: Int!
+    questionId: ID!
+    userId: ID!
 }
+

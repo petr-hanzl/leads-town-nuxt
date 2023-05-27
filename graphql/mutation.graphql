@@ -1,8 +1,8 @@
 type Mutation {
-    createUser(extendUserInput: ExtendUserInput): CreateUserMutationResponse
-    createAnswer(answerInput: AnswerInput): CreateAnswerMutationResponse
-    createAnswers(answers: [AnswerInput]): CreateAnswersMutationResponse
-    createResult(resultInput: ResultInput): CreateResultMutationResponse
+    createUser(userInput: UserInput!): User
+    createAnswer(answerInput: AnswerInput!): Answer
+    createAnswers(answers: [AnswerInput]): [Answer]
+    createResult(resultInput: ResultInput!): Result
     verifyToken(token: String): VerifyTokenMutationResponse
 }
 

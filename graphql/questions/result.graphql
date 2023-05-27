@@ -1,20 +1,15 @@
-type ResultType {
+type Result {
     id: ID!
-    socialNetworks: Int!
-    emailing: Int!
     ppc: Int!
-    user: ExtendUserType
-}
-
-
-
-type CreateResultMutationResponse {
-    result: ResultType
+    emailing: Int!
+    socialNetworks: Int!
+    user: User!
 }
 
 input ResultInput {
-    socialNetworks: Int
-    emailing: Int
-    ppc: Int
-    userId: ID
+    ppc: Int!
+    emailing: Int!
+    socialNetworks: Int!
+    userId: ID!
 }
+

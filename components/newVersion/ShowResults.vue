@@ -56,6 +56,7 @@
         answerStore.createResult()
 
         const userId = authStore.getCurrentUser.id
+        console.log(authStore.getCurrentUser)
 
 
         answerStore.saveUserAnswers(userId)

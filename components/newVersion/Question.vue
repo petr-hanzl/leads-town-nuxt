@@ -22,7 +22,7 @@
                     </p>
                 </v-col>
                 <!-- question yes or no -->
-                <v-col v-if="question.answerCategory.value === 'True/False'" cols="12" sm="8" md="6" lg="5" class="d-flex justify-center my-5">
+                <v-col v-if="question.answerCategory.category === 'True/False'" cols="12" sm="8" md="6" lg="5" class="d-flex justify-center my-5">
                     <v-row justify="center">
                         <v-col cols="7" sm="6">
                             <v-btn @click="setYes()" block color="primary" size="x-large" class="text-lowercase font-weight-bold rounded-pill">

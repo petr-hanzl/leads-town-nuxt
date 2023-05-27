@@ -33,7 +33,8 @@ export default defineNuxtConfig({
         clients: {
             default: {
                 // httpEndpoint: 'https://marketingquestionnairebackend-production.up.railway.app/graphql/'
-                httpEndpoint: 'http://127.0.0.1:8000/graphql/'
+                // httpEndpoint: 'http://127.0.0.1:8000/graphql/'
+                httpEndpoint: 'http://localhost:8080/query'
             }
         }
     },

@@ -4,7 +4,7 @@
 
                 <v-col class="d-block">
                     <div v-for="q in store.getAllQuestions">
-                        <div v-if="q.answerCategory.value==='Scale'">
+                        <div v-if="q.answerCategory.category==='Scale'">
                             <QuestionSlider :question="q"/>
                         </div>
                         <div v-else>

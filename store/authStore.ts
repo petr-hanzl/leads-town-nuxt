@@ -13,15 +13,12 @@ const emptyUserInfo = (): UserInfo => ({
 })
 
 const CREATE_USER_MUTATION = gql`
-    mutation createUser($email: String, $firstName: String, $lastName: String, $acceptEmailing: Boolean) {
-        createUser(extendUserInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}){
-            user{
-                id,
-                firstName,
-                lastName,
-                email,
-                token
-            }
+    mutation createUser($email: String!, $firstName: String!, $lastName: String!, $acceptEmailing: Boolean!) {
+        createUser(userInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}){
+            id,
+            firstName,
+            lastName,
+            email,
         }
     }`
 
@@ -66,9 +63,10 @@ export const useAuthStore = defineStore("authStore", {
                 },
             })
             createUser().then(res => {
+                // @ts-ignore
                 if(res?.data) {
-                    this.currentUser = res.data.createUser.user
-                    localStorage.setItem("token", res.data.createUser.user.token)
+                    console.log(res.data.createUser.id)
+                    this.currentUser = res.data.createUser
                 } else if (res?.errors) {
                     console.log(JSON.stringify(res.errors, null, 2))
                 }

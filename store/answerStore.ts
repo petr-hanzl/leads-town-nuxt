@@ -15,21 +15,19 @@ interface AnswerInput {
 
 export interface AnswerCategoryInfo {
     id: number
-    value: string
+    category: string
 }
 
 const CREATE_ANSWER_MUTATION = gql`
-    mutation createAnswer($userId: ID, $answerValue: Int, $questionId: ID) {
+    mutation createAnswer($userId: ID!, $answerValue: Int!, $questionId: ID!) {
         createAnswer(answerInput: {userId: $userId, questionId: $questionId, answerValue: $answerValue}) {
-            answer {
-                user {
-                    email
-                }
-                question {
-                    questionText
-                }
-                answerValue
+            user {
+                email
             }
+            question {
+                questionText
+            }
+            answerValue
         }
     }
 `
@@ -37,26 +35,22 @@ const CREATE_ANSWER_MUTATION = gql`
 const CREATE_ANSWERS_MUTATION = gql`
     mutation createAnswers($answers: [AnswerInput]) {
         createAnswers(answers: $answers){
-            answers {
-                answerValue
-                user {
-                    email
-                }
-                question {
-                    questionText
-                }
+            answerValue
+            user {
+                email
+            }
+            question {
+                questionText
             }
         }
     }
 `
 
 const CREATE_RESULT_MUTATION = gql`
-    mutation createResult($emailing: Int, $socialNetworks: Int, $ppc: Int, $userId: ID) {
+    mutation createResult($emailing: Int!, $socialNetworks: Int!, $ppc: Int!, $userId: ID!) {
         createResult(resultInput: {emailing: $emailing, socialNetworks: $socialNetworks, ppc: $ppc, userId: $userId}) {
-            result {
-                user {
-                    email
-                }
+            user {
+                email
             }
         }
     }
@@ -72,7 +66,7 @@ export const useAnswerStore = defineStore( "answerStore", {
             if(isNaN(answerValue)) {
                 answerValue = 0
             }
-            if (question.answerCategory.value !== 'Scale') {
+            if (question.answerCategory.category !== 'Scale') {
                 answerValue = answerValue * 10
             }
             this.userAnswerMap.set(question, answerValue)
@@ -126,12 +120,12 @@ export const useAnswerStore = defineStore( "answerStore", {
         },
         createResult() {
             this.userAnswerMap.forEach((answer, question) => {
-                const currentResult = this.userResultMap.get(question.questionCategory.value)
+                const currentResult = this.userResultMap.get(question.questionCategory.category)
 
                 if(currentResult !== undefined) {
-                    this.userResultMap.set(question.questionCategory.value, currentResult + answer)
+                    this.userResultMap.set(question.questionCategory.category, currentResult + answer)
                 } else {
-                    this.userResultMap.set(question.questionCategory.value, answer)
+                    this.userResultMap.set(question.questionCategory.category, answer)
                 }
             })
 

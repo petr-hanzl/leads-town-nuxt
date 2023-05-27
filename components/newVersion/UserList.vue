@@ -12,10 +12,12 @@
 
 
     // only fetch if store is empty
-    if (userStore.userList.length === 0) {
-        await userStore.fetchAllUsers()
-    }
+    // if (userStore.userList.length === 0) {
+    //
+    // }
+    await userStore.fetchAllUsers()
 
+    console.log(userStore.userList)
 
     const pushUserPage = (user: UserInfo) => {
         userStore.setViewedUser(user)

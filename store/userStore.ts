@@ -20,7 +20,7 @@ interface Result {
 
 const ALL_USERS = gql`
     query{
-        allUsers{
+        listUsers{
             id
             email
             firstName
@@ -30,15 +30,15 @@ const ALL_USERS = gql`
                 socialNetworks
                 ppc
             }
-            answerSet {
+            answerSet { 
                 answerValue
                 question {
                     questionText
                     questionCategory {
-                        value
+                        category
                     }
                     answerCategory {
-                        value
+                        category
                     }
                 }
             }
@@ -47,7 +47,7 @@ const ALL_USERS = gql`
 `
 
 type UserResult = {
-    allUsers: UserInfo[]
+    listUsers: UserInfo[]
 }
 
 export const useUserStore = defineStore("userStore", {
@@ -57,9 +57,11 @@ export const useUserStore = defineStore("userStore", {
     }),
     actions: {
         async fetchAllUsers() {
+            console.log("fetch")
             const{ data } = await useAsyncQuery<UserResult>(ALL_USERS)
+            console.log(data.value)
             if (data.value) {
-                this.userList = data.value.allUsers
+                this.userList = data.value.listUsers
             }
         },
         setViewedUser(user: UserInfo) {

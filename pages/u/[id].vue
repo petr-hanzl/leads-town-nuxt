@@ -19,6 +19,7 @@
       useRouter().push({path: "/u"})
   }
 
+
 </script>
 
 <style scoped>

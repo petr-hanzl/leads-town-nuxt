@@ -3,14 +3,14 @@ import {AnswerCategoryInfo} from "~/store/answerStore";
 
 const ALL_QUESTIONS_QUERY = gql`
     query {
-        allQuestions{
+        listQuestions{
             id,
             questionText,
             questionCategory{
-                value
+                category
             }
             answerCategory{
-                value
+                category
             }
         }
     }
@@ -26,12 +26,12 @@ export interface QuestionsInfo {
 
 interface QuestionCategoryInfo {
     id: number
-    value: string
+    category: string
 }
 
 
 type QuestionResult = {
-    allQuestions: QuestionsInfo[]
+    listQuestions: QuestionsInfo[]
 
 }
 
@@ -44,14 +44,15 @@ export const useQuestionStore = defineStore( "questionStore", {
     }),
     actions: {
         async fetchAllQuestions() {
-            const { data } = await useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
+            const { data, error } = await useAsyncQuery<QuestionResult>(ALL_QUESTIONS_QUERY)
             if (data.value){
-                this.questionList = data.value.allQuestions
+                this.questionList = data.value.listQuestions
                 this.questionList.forEach((question) => {
-                    this.questionCategories.set(question.id, question.questionCategory.value)
+                    this.questionCategories.set(question.id, question.questionCategory.category)
                 })
-            } else {
+            } else if (error.value) {
                 console.log("cannot fetch questions")
+                console.log(error.value)
             }
             this.position = 0
 

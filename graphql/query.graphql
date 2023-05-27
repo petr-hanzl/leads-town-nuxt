@@ -1,5 +1,5 @@
 type Query {
-    allQuestions:[QuestionType]
-    allUsers:[ExtendUserType]
+    listQuestions:[Question]
+    listUsers:[User]!
 }
 
