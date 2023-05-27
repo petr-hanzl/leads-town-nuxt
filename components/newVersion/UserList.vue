@@ -8,18 +8,17 @@
 
 <script setup lang="ts">
     import {UserInfo, useUserStore} from "~/store/userStore"
+
     const userStore = useUserStore()
 
-
     // only fetch if store is empty
-    // if (userStore.userList.length === 0) {
-    //
-    // }
-    await userStore.fetchAllUsers()
+    if (!userStore.userList || userStore.userList.length == 0) {
+        await userStore.fetchAllUsers()
+    }
 
 
-    const token = useCookie("token")
-    console.log(token)
+
+
 
     const pushUserPage = (user: UserInfo) => {
         userStore.setViewedUser(user)

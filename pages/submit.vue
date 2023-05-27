@@ -3,7 +3,11 @@
     <ShowResults/>
 </template>
 <script setup lang="ts">
-import ShowResults from "~/components/newVersion/ShowResults.vue";
+    definePageMeta({
+        middleware: 'auth'
+    })
+
+    import ShowResults from "~/components/newVersion/ShowResults.vue";
 
 
 </script>

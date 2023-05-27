@@ -1,7 +1,6 @@
 import path from "path";
 
 export default defineNuxtConfig({
-
     modules: [
         'nuxt-font-loader',
         '@vee-validate/nuxt',

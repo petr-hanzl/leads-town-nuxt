@@ -4,6 +4,8 @@ type Mutation {
     createAnswers(answers: [AnswerInput]): [Answer]
     createResult(resultInput: ResultInput!): Result
     verifyToken(token: String): VerifyTokenMutationResponse
+
+    formRegister(registerInput: FormRegisterInput!): User!
 }
 
 

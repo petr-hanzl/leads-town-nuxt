@@ -111,55 +111,56 @@
 </template>
 
 <script setup lang="ts">
-import {useField, useForm} from 'vee-validate'
-import {useAuthStore} from "~/store/authStore";
-import { useDisplay } from "vuetify";
-import {useQuestionStore} from "~/store/questionStore";
+  import {useField, useForm} from 'vee-validate'
+  import {useAuthStore} from "~/store/authStore";
+  import { useDisplay } from "vuetify";
+  import {useQuestionStore} from "~/store/questionStore";
 
-const { mdAndDown } = useDisplay();
+  const { mdAndDown } = useDisplay();
 
-const {handleSubmit} = useForm({
-    validationSchema: {
-        firstname(value: string) {
-            if (value?.length >= 2) return true
+  const {handleSubmit} = useForm({
+      validationSchema: {
+          firstname(value: string) {
+              if (value?.length >= 2) return true
 
-            return 'Jméno musí mít alespoň 2 znaky.'
-        },
-        lastname(value: string) {
-            if (value?.length >= 2) return true
+              return 'Jméno musí mít alespoň 2 znaky.'
+          },
+          lastname(value: string) {
+              if (value?.length >= 2) return true
 
-            return 'Příjmení musí mít alespoň 2 znaky.'
-        },
-        email(value: string) {
-            if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
+              return 'Příjmení musí mít alespoň 2 znaky.'
+          },
+          email(value: string) {
+              if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
 
-            return 'Neplatná e-mailová adresa.'
-        },
-        checkbox(value: any) {
-            if (value === '1') return true
+              return 'Neplatná e-mailová adresa.'
+          },
+          checkbox(value: any) {
+              if (value === '1') return true
 
-            return 'Musí být potvrzeno.'
-        },
-    },
-});
+              return 'Musí být potvrzeno.'
+          },
+      },
+  });
 
-const firstname = useField('firstname');
-const lastname = useField('lastname');
-let email = useField('email');
-const checkbox = useField('checkbox');
+  const firstname = useField('firstname');
+  const lastname = useField('lastname');
+  let email = useField('email');
+  const checkbox = useField('checkbox');
 
-// retrieve store
-const authStore = useAuthStore()
-const questionStore = useQuestionStore()
+  // retrieve store
+  const authStore = useAuthStore()
+  // const questionStore = useQuestionStore()
+  // await questionStore.fetchAllQuestions()
 
-await questionStore.fetchAllQuestions()
 
 
-const submit = handleSubmit(userData => {
-    authStore.saveUser(userData.firstname, userData.lastname, userData.email)
-    // todo rework with promise
-    useRouter().push({path:'question/0'})
-});
+
+  const submit = handleSubmit(async userData => {
+      await authStore.formRegister(userData.firstname, userData.lastname, userData.email, true)
+      // todo rework with promise
+
+  });
 
 </script>
 

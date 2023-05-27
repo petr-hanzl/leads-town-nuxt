@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {UserInfo} from "~/store/userStore";
 import {decodeJwt} from 'jose'
-
+import {b} from "vite-node/types-c39b64bb";
 
 export interface LoginInput {
     email: string
@@ -28,17 +28,18 @@ const emptyUserInfo = (): UserInfo => ({
     answerSet: []
 })
 
-const CREATE_USER_MUTATION = gql`
-    mutation createUser($email: String!, $firstName: String!, $lastName: String!, $acceptEmailing: Boolean!) {
-        createUser(userInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}){
-            id,
-            firstName,
-            lastName,
-            email,
+
+const FORM_REGISTER_MUTATION = gql`
+    mutation formRegister($email: String!, $firstName: String!, $lastName: String!, $acceptEmailing: Boolean!) {
+        formRegister(registerInput: {email: $email, firstName: $firstName, lastName: $lastName, acceptEmailing: $acceptEmailing}) {
+            id
+            firstName
+            lastName
+            email
             token
         }
-    }`
-
+    }
+`
 
 export const useAuthStore = defineStore("authStore", {
     state: () => ({
@@ -46,7 +47,20 @@ export const useAuthStore = defineStore("authStore", {
         exp: 0
     }),
     actions: {
+        decodeJWT() {
+            if (!this.currentUser || this.currentUser.token == "") {
+                return
+            }
+            const jwtToken = decodeJwt(this.currentUser.token)
+            if (jwtToken.exp) {
+                this.exp = jwtToken.exp * 1000
+            }
+        },
         isAuthenticated(): boolean {
+            if (this.exp == 0 && this.currentUser) {
+                this.decodeJWT()
+            }
+
             return this.exp > Date.now()
         },
         async loginUser(email: string, password: string) {
@@ -63,39 +77,41 @@ export const useAuthStore = defineStore("authStore", {
                             localStorage.setItem("token", res.data.authLogin.token)
                         }
 
-                        const jwtToken = decodeJwt(res.data.authLogin.token)
-                        if (jwtToken.exp) {
-                            this.exp = jwtToken.exp * 1000
-                        }
 
-                        console.log(Date.now())
-                        console.log(this.exp)
-                        useRouter().push({path:'admin/u'})
+                        this.currentUser = emptyUserInfo()
+                        console.log(res.data)
+                        this.currentUser = res.data.authLogin
+
+                        this.decodeJWT()
+                        navigateTo('/admin/u')
                     }
                 })
                 .catch((e) => {
                     console.log(e)
                 })
         },
-        saveUser(firstName: string, lastName: string, email: string) {
-            const {mutate: createUser} = useMutation(CREATE_USER_MUTATION, {
+        async formRegister(firstName: string, lastName: string, email: string, acceptEmailing: boolean) {
+            const { mutate: formRegister } = useMutation(FORM_REGISTER_MUTATION, {
                 variables: {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
-                    acceptEmailing: true
+                    acceptEmailing: acceptEmailing
                 },
             })
-            createUser()
+            formRegister()
                 .then(res => {
-                if(res?.data) {
-                    this.currentUser = res.data.createUser
-                }
-            })
-                .catch((e) => {
+                    if (res?.data) {
+                        this.currentUser = res.data.formRegister
+
+                        this.decodeJWT()
+                    }
+                    navigateTo('/question/0')
+                })
+                .catch(e => {
                     console.log(e)
                 })
-        }
+        },
     },
     getters: {
         getCurrentUser(state): UserInfo {

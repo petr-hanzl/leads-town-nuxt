@@ -3,3 +3,10 @@ type VerifyTokenMutationResponse {
 }
 
 scalar GenericScalar
+
+input FormRegisterInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    acceptEmailing: Boolean!
+}

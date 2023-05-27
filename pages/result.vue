@@ -5,8 +5,10 @@
 </template>
 
 <script setup lang="ts">
-
-import Chart from "~/components/newVersion/Chart.vue";
+    import Chart from "~/components/newVersion/Chart.vue";
+    definePageMeta({
+        middleware: 'auth'
+    })
 </script>
 <style scoped>
 
